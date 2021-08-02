@@ -1,0 +1,32 @@
+<div *ngIf="!loading">
+  <div class="sort-filter">
+    <mat-list>
+      <mat-list-item>
+        <entities-per-page [entityListComponent]="this"
+                           [isSpecialLinkForPageByNumber]="this.category"
+                           [category]="this.category">
+
+        </entities-per-page>
+      </mat-list-item>
+    </mat-list>
+    <mat-list>
+      <mat-list-item>
+        <sorting-entities [entityListComponent]="this" [sortOptions]="getSortOptions()"></sorting-entities>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div class="ui special link cards">
+    <book-single class="card"
+                 *ngFor="let book of books"
+                 [book]="book"
+                 [addToCartPopup]="addEditContainerRef"
+                 [bookListComponent]="this">
+    </book-single>
+  </div>
+  <pagination [entityListComponent]="this"
+              [isSpecialLinkForPageByNumber]="this.category">
+  </pagination>
+
+  <template #addToCartPopup></template>
+
+</div>

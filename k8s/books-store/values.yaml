@@ -1,0 +1,228 @@
+# Default values for books-store.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: books-store
+repository: einshtein89
+
+configmap:
+  name: configmap
+
+#UI section
+frontend:
+  service:
+    name: angular-service
+    port: 80
+    targetPort: 80
+    selector: angular-deployment
+    protocol: TCP
+    type: NodePort
+  deployment:
+    name: angular-deployment
+    replicaCount: 2
+    minReadySeconds: 15
+    strategy: RollingUpdate
+    maxUnavailable: 1
+    maxSurge: 1
+    image:
+      name: books_frontend_mongo
+      tag: 1
+      imagePullPolicy: Always
+    containerPort: 80
+
+
+#backend section
+backend:
+  service:
+    name: spring-boot-service
+    port: 80
+    targetPort: 3000
+    selector: spring-boot-deployment
+    protocol: TCP
+    type: NodePort
+  deployment:
+    name: spring-boot-deployment
+    replicaCount: 2
+    minReadySeconds: 15
+    strategy: RollingUpdate
+    maxUnavailable: 1
+    maxSurge: 1
+    image:
+      name: books_backend_mongo
+      tag: 1
+      imagePullPolicy: Always
+    containerPort: 3000
+
+#kafka-producer
+kafkaProducer:
+  service:
+    name: kafka-producer-service
+    port: 80
+    targetPort: 8081
+    selector: kafka-producer-deployment
+    protocol: TCP
+    type: NodePort
+  deployment:
+    name: kafka-producer-deployment
+    replicaCount: 2
+    minReadySeconds: 15
+    strategy: RollingUpdate
+    maxUnavailable: 1
+    maxSurge: 1
+    image:
+      name: books_kafka_producer
+      tag: 1
+      imagePullPolicy: Always
+    containerPort: 8081
+
+#kafka-consumer
+kafkaConsumer:
+  service:
+    name: kafka-consumer-service
+    port: 80
+    targetPort: 8082
+    selector: kafka-consumer-deployment
+    protocol: TCP
+    type: NodePort
+  deployment:
+    name: kafka-consumer-deployment
+    replicaCount: 2
+    minReadySeconds: 15
+    strategy: RollingUpdate
+    maxUnavailable: 1
+    maxSurge: 1
+    image:
+      name: books_kafka_consumer
+      tag: 1
+      imagePullPolicy: Always
+    containerPort: 8082
+
+#mongo section
+#bitnami chart
+mongodb:
+  auth:
+    enabled: false
+  #    rootPassword: password
+  service:
+    port: 80
+    nameOverride: mongodb
+
+#cowboysysop mongo express
+mongo-express:
+  mongodbServer: books-store-mongodb
+  mongodbPort: 80
+  mongodbEnableAdmin: true
+  service:
+    port: 80
+
+#redis
+redis:
+  service:
+    name: redis-master
+    port: 6379
+  auth:
+    enabled: false
+  replica:
+    replicaCount: 1
+  architecture: standalone
+
+#kafka
+kafka:
+  service:
+    name: kafka
+#  advertisedListeners: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+#  listenerSecurityProtocolMap: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+#  interBrokerListenerName: PLAINTEXT
+#  offsetsTopicReplicationFactor: 1
+
+#local custom mongo
+mongo_db_custom:
+  enabled: false
+  service:
+    name: mongo-service
+    selector: mongodb
+    protocol: TCP
+    port: 80
+    targetPort: 27017
+  deployment:
+    name: mongodb-deployment
+    replicaCount: 1
+    image: mongo
+    containerPort: 27017
+
+#local custom mongo express
+custom_mongo_express:
+  enabled: false
+  name: mongo_express
+  inage: mongo_express
+  containerPort: 8081
+  service:
+    name: mongo_express-service
+#    type: LoadBalancer
+    port: 80
+    targetPort: 8081
+    nodePort: 30000
+  secret:
+    name: mongodb-secret
+
+#ingress section
+ingress:
+  host: books.com
+  name: ingress
+  enabled: true
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/tls-acme: "true"
+  tls:
+    secretName: tls-secret
+    hosts:
+      - books.com
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+
+resources:
+   limits:
+     cpu: "1.0"
+     memory: 1024Mi
+   requests:
+     cpu: "0.01"
+     memory: 256Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -1,0 +1,16 @@
+<div class="blurring dimmable image">
+  <div class="ui dimmer">
+    <div class="content">
+      <div class="center">
+        <button class="ui inverted button" (click)="openAddToCartPopup()">{{ 'store.page.add.to.cart' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <img [src]="getUserPhoto()">
+</div>
+<a *ngIf="book.catalog">{{ book.catalog.name }}</a>
+<a class="ui large header">
+  {{ book.author }}<br/>
+  {{ book.title }}
+</a>
+<div class="meta">{{ book.price | currency }}</div>

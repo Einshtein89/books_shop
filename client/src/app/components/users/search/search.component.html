@@ -1,0 +1,17 @@
+<div class="ui search"
+     (mouseover)="this.searchState = 'active'"
+     (mouseout)="this.searchState = getSearchState(searchInput.value)">
+    <div class="ui icon input">
+      <input type="text" placeholder="Search..." [@searchState]="this.searchState" #searchInput class="prompt" />
+      <i *ngIf="searchInput.value.length > 0" class="icon searchremove" (click)="resetInput(searchInput)">
+        <span class="glyphicon glyphicon-remove"></span>
+      </i>
+      <i class="search link icon" (click)="search(searchInput.value)"></i>
+    </div>
+  <div *ngIf="_loading">
+    <img style="position: absolute;" src="../../../../assets/ajax-loader.gif">
+  </div>
+  <template #searchResult></template>
+</div>
+
+

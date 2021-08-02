@@ -1,0 +1,64 @@
+@import "../../../../../themes.less";
+
+table.content-holder {
+  width: 100%;
+
+  td {
+    padding: 10px;
+    width: 11.9%;
+    text-align: center;
+    border-bottom: @border-main;
+  }
+}
+
+table.content-holder {
+  tr:not(.even-row) {
+    td:first-child:not(.orderId) {
+      border-right: @border-main;
+    }
+  }
+}
+
+hide-id {
+  color: @background-color-default;
+}
+
+.show-id {
+  border-bottom: unset!important;
+}
+
+.table-holder {
+  margin-bottom: 30px;
+}
+
+tr.even-row {
+  td {
+    &:not(.empty-td) {
+      background-color: rgba(0, 93, 128, 0.19);
+    }
+    &.empty-td {
+      background-color: @background-color-default;;
+    }
+  }
+}
+
+tr.odd-row {
+  border-top: @border-main;
+}
+
+.total-amount {
+  text-align: right!important;
+  border-right: unset!important;
+  border-bottom: unset!important;
+}
+
+.total-amount-holder {
+  margin-bottom: 20px;
+}
+
+.order-date {
+  td {
+    border: none!important;
+    text-align: left!important;
+  }
+}

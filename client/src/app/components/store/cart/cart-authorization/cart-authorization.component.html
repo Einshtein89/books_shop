@@ -1,0 +1,44 @@
+<div class="container">
+  <h2 class="form-signin-heading">{{ 'cart.page.login.header.message' | translate }}</h2>
+  <div *ngIf="!authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0">
+    <h4>{{ 'cart.page.login.choose.text' | translate }}</h4>
+    <form class="form-signin" style="float: left;">
+      <div class="alert alert-danger" role="alert" *ngIf="message">
+        {{ message }}
+      </div>
+      <br/>
+      <div class="form-group">
+        <label for="username">{{ 'login.page.form.email.label' | translate }}</label>
+        <input class="form-control" name="username" id="username" #username>
+      </div>
+      <br/>
+      <div class="form-group">
+        <label for="password">{{ 'login.page.form.password.label' | translate }}</label>
+        <input class="form-control" type="password" id="password" name="password" #password>
+      </div>
+      <br/>
+      <button class="btn btn-sm btn-primary btn-block"
+              name="Submit" value="{{ 'login.page.form.login.button' | translate }}" type="Submit"
+              (click)="login(username.value, password.value)">{{ 'login.page.form.login.button' | translate }}</button>
+
+    </form>
+    <div class="left-float or">or</div>
+    <button class="btn-lg btn-secondary btn-block register" [routerLink]="['/register']"
+            value="{{ 'login.page.form.register' | translate }}">
+      {{ 'login.page.form.register' | translate }}
+    </button>
+  </div>
+</div>
+<div *ngIf="authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0">
+  {{ 'my.orders.authorization.hi' | translate }}, <b>{{ loggedInUser ? loggedInUser.firstName : '' }}</b>! {{ 'my.orders.authorization.registered.may.proceed' | translate }}
+</div>
+<p *ngIf="cartService.booksInCart.getValue().size == 0">{{ 'store.page.popup.empty.cart' | translate }}</p>
+<div class="modal-footer">
+  <button [routerLink]="['/cart']"
+          class="ui positive left floated button">{{ 'cart.page.back.button' | translate }}
+  </button>
+  <button [routerLink]="['../confirmation']"
+          *ngIf="authService.isLoggedIn() && cartService.booksInCart.getValue().size > 0"
+          class="ui positive right floated button">{{ 'cart.page.next.button' | translate }}
+  </button>
+</div>

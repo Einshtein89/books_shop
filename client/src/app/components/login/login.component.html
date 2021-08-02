@@ -1,0 +1,28 @@
+<div class="container">
+  <img src="/assets/logo/login.jpg" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+  <form class="form-signin">
+    <div class="alert alert-danger" role="alert" *ngIf="message">
+      {{ message }}
+    </div>
+    <h3 class="form-signin-heading">{{ 'login.page.form.welcome' | translate }}</h3>
+    <br/>
+
+    <div class="form-group">
+      <label for="username">{{ 'login.page.form.email.label' | translate }}</label>
+      <input class="form-control" name="username" id="username" #username>
+    </div> <br/>
+    <div class="form-group">
+      <label for="password">{{ 'login.page.form.password.label' | translate }}</label>
+      <input class="form-control" type="password" id="password" name="password" #password>
+    </div> <br />
+
+    <button class="btn btn-lg btn-primary btn-block"
+            name="Submit" value="{{ 'login.page.form.login.button' | translate }}" type="Submit"
+            (click)="login(username.value, password.value)">{{ 'login.page.form.login.button' | translate }}</button>
+    <a class="item" [routerLink]="['/register']">
+      {{ 'login.page.form.register' | translate }}
+    </a>
+  </form>
+
+</div>
+

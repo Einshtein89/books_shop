@@ -1,0 +1,76 @@
+<div class="main text container">
+  <h2 class="header-centered">{{ 'cart.page.header.cart' | translate }}</h2>
+  <div *ngIf="allBooksInCart.length > 0">
+    <table class="content-holder">
+      <tr>
+        <td>№</td>
+        <td>{{ 'store.page.popup.cover' | translate }}</td>
+        <td>{{ 'store.page.popup.category' | translate }}</td>
+        <td>{{ 'store.page.popup.author' | translate }}</td>
+        <td>{{ 'store.page.popup.title' | translate }}</td>
+        <td>{{ 'store.page.popup.price' | translate }}</td>
+        <td>{{ 'store.page.popup.amount' | translate }}</td>
+        <td>{{ 'store.page.popup.actions' | translate }}</td>
+        <td></td>
+      </tr>
+      <tr *ngFor="let book of allBooksInCart; let i = index" style="height:50px;">
+        <td>
+          {{ i + 1 }}
+        </td>
+        <td>
+          <div class="blurring dimmable image">
+            <img width="50px" height="50px" [src]="imageService.getImgSrc(book)">
+          </div>
+        </td>
+        <td>
+          <div>
+            <a *ngIf="book.catalog">{{ book.catalog.name }}</a>
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ book.author }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ book.title }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ book.price | localizedCurrency  }}
+          </div>
+        </td>
+        <td>
+          <div>
+            {{ booksMap.get(book) }}
+          </div>
+        </td>
+        <td>
+          <div class="change-book-quantity">
+            <div class="action-buttons"><a class="substract-book"
+                                           (click)="cartService.changeBookQuantity(book, {removeSingle: true, removeAll: false})">
+              - </a></div>
+            <div class="action-buttons"><a class="add-book"
+                                           (click)="cartService.changeBookQuantity(book, {removeSingle: false, removeAll: false})">
+              + </a></div>
+          </div>
+        </td>
+        <td>
+          <button type="button" class="close"
+                  (click)="cartService.changeBookQuantity(book, {removeSingle: false, removeAll: true})">&times;
+          </button>
+        </td>
+      </tr>
+    </table>
+    <div class="right-float" style="margin-right: 120px;">{{ 'my.orders.total.amount' | translate }}: {{ cartService.getTotalAmount(booksMap) | localizedCurrency }}</div>
+  </div>
+</div>
+<button *ngIf="allBooksInCart.length > 0" type="submit" class="ui positive right floated button continue"
+        [routerLink]="['../authorization']">{{ 'cart.page.next.button' | translate }}
+</button>
+<p *ngIf="allBooksInCart.length == 0">{{ 'store.page.popup.empty.cart' | translate }}</p>
+<button *ngIf="allBooksInCart.length == 0" [routerLink]="['/store']"
+        class="ui positive left floated button">{{ 'cart.page.back.to.shopping' | translate }}
+</button>

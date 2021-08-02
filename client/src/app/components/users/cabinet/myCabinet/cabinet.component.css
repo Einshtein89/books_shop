@@ -1,0 +1,31 @@
+
+.has-success .form-control {
+  border-color: #5cb85c;
+}
+
+.has-danger .form-control {
+  border-color: #d9534f;
+}
+
+.ui.large.equal.width.form.segment {
+  /*width: 50%;*/
+  margin: 0 auto;
+}
+
+.unEditableField {
+  padding: 8px 8px 8px 17px;
+  /*width: 30%;*/
+  /*float: left;*/
+}
+
+.modal-footer {
+  margin-top: 50px;
+}
+
+.topbar {
+  border-top: 1px solid #e5e5e5;
+}
+
+.change-password-form {
+  padding: 10px;
+}

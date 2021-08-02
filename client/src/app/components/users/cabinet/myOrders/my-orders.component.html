@@ -1,0 +1,85 @@
+<div *ngIf="!loading">
+  <div *ngIf="orders && orders.size == 0">
+    {{ 'my.orders.title' | translate }}
+  </div>
+  <div *ngIf="orders && orders.size > 0">
+    <h2 class="header-centered">{{ 'my.orders.title' | translate }}</h2>
+    <hr/>
+
+    <div *ngFor="let date of ordersKeys" class="table-holder">
+      <table class="content-holder">
+        <tr class="order-date">
+          <td colspan="2">
+            <b>{{ date | localizedDate }}</b>
+          </td>
+          <td colspan="2">
+            <b>{{'my.orders.books.count' | translate}}: {{booksCount}}</b>
+          </td>
+        </tr>
+        <tr>
+          <td class="orderId">{{'my.orders.order.id.header' | translate}}</td>
+          <td>{{'my.orders.position.number.header' | translate}}</td>
+          <td>{{ 'store.page.popup.cover' | translate }}</td>
+          <td>{{ 'store.page.popup.category' | translate }}</td>
+          <td>{{ 'store.page.popup.author' | translate }}</td>
+          <td>{{ 'store.page.popup.title' | translate }}</td>
+          <td>{{ 'store.page.popup.price' | translate }}</td>
+          <td>{{ 'store.page.popup.amount' | translate }}</td>
+        </tr>
+        <ng-container *ngFor="let ordersByDate of ordersValues;">
+          <ng-container *ngFor="let orderArray of getOrderByDateValues(ordersByDate);">
+            <ng-container *ngFor="let order of orderArray; let i = index; even as isEven">
+              <tr [ngClass]="{'even-row': !isEven, 'odd-row': isEven}">
+                <ng-container *ngIf="date == order.date">
+                  <td [attr.rowspan]="orderArray.length" *ngIf="showUniqueId(orderArray, i);">
+                    {{ order.uniqueId }}
+                  </td>
+                  <td>
+                    {{ i + 1 }}
+                  </td>
+                  <td>
+                    <div class="blurring dimmable image">
+                      <img width="50px" height="50px" [src]="imageService.getImgSrc(order.book)">
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <a *ngIf="order.book.catalog">{{ order.book.catalog.name }}</a>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {{ order.book.author }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {{ order.book.title }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {{ order.book.price | localizedCurrency  }}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      {{ order.amount }}
+                    </div>
+                  </td>
+                </ng-container>
+              </tr>
+              <ng-container *ngIf="i == orderArray.length - 1 && date == order.date">
+                <tr class="total-amount-holder">
+                  <td colspan="8" class="total-amount">
+                    {{ 'my.orders.total.amount' | translate  }}: {{ orderArray[i].totalAmount | localizedCurrency }}
+                  </td>
+                </tr>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+</div>

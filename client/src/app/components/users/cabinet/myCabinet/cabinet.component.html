@@ -1,0 +1,279 @@
+<div *ngIf="loading"><img class="spinner" src="assets/ajax-loader.gif"></div>
+<div *ngIf="!loading">
+  <br/>
+  <div>
+    <h2 class="title" class="header-centered">{{ 'my.cabinet.title' | translate }}</h2>
+  </div>
+  <br/>
+  <form class="ui large equal width form" novalidate
+        [formGroup]="mainSectionForm"
+        (ngSubmit)="onSubmit(mainSectionForm.value)">
+    <h3>{{ 'user.form.actions.cabinet.main.section.label' | translate }}</h3>
+    <div class="two fields">
+      <div class="field" [ngClass]="{
+          'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
+          'has-success': firstName.valid && (firstName.dirty || firstName.touched)
+        }">
+        <label #firstNameLabel for="firstName">{{ 'user.form.actions.first.name.label' | translate }}</label>
+        <div class="unEditableField" *ngIf="!editableFields.get('firstName')"
+             (mouseover)="editableFields.set('firstName', true)">
+          {{ mainSectionForm.get('firstName').value }}
+        </div>
+        <input *ngIf="editableFields.get('firstName')"
+               (mouseout)="setFieldUneditable('firstName', firstName.errors)"
+               type="text"
+               id="firstName"
+               class="form-control"
+               formControlName="firstName"
+               placeholder="{{ firstNameLabel.innerHTML}}">
+        <div class="error"
+             *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+          <p *ngIf="firstName.errors.required">
+            {{ 'field.error' | translate }}
+            {{ firstNameLabel.innerHTML}}
+            {{ 'required.error' | translate }}
+          </p>
+          <p *ngIf="firstName.errors.maxlength">
+            {{ 'field.error' | translate }}
+            {{ firstNameLabel.innerHTML}}
+            {{ 'maxlength.error' | translate }}
+            {{ firstName.errors.maxlength.requiredLength }}
+          </p>
+        </div>
+      </div>
+      <div class="field" [ngClass]="{
+          'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
+          'has-success': lastName.valid && (lastName.dirty || lastName.touched)
+        }">
+        <label #lastNameLabel for="lastName">{{ 'user.form.actions.last.name.label' | translate }}</label>
+        <div class="unEditableField" *ngIf="!editableFields.get('lastName')"
+             (mouseover)="editableFields.set('lastName', true)">
+          {{ mainSectionForm.get('lastName').value }}
+        </div>
+        <input *ngIf="editableFields.get('lastName')"
+               (mouseout)="setFieldUneditable('lastName', lastName.errors)"
+               type="text"
+               id="lastName"
+               class="form-control"
+               formControlName="lastName"
+               placeholder="{{ lastNameLabel.innerHTML }}">
+        <div class="error"
+             *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+          <p *ngIf="lastName.errors.required">
+            {{ 'field.error' | translate }}
+            {{ lastNameLabel.innerHTML}}
+            {{ 'required.error' | translate }}
+          </p>
+          <p *ngIf="lastName.errors.maxlength">
+            {{ 'field.error' | translate }}
+            {{ firstNameLabel.innerHTML}}
+            {{ 'maxlength.error' | translate }}
+            {{ lastName.errors.maxlength.requiredLength }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="two fields">
+      <div class="field" [ngClass]="{
+          'has-danger': email.invalid && (email.dirty || email.touched),
+          'has-success': email.valid && (email.dirty || email.touched)
+        }">
+        <label #emailLabel for="email">{{ 'user.form.actions.email.label' | translate }}</label>
+        <div class="unEditableField" *ngIf="!editableFields.get('email')"
+             (mouseover)="editableFields.set('email', true)">
+          {{ mainSectionForm.get('email').value }}
+        </div>
+        <input *ngIf="editableFields.get('email')"
+               (mouseout)="setFieldUneditable('email', email.errors)"
+               type="text"
+               id="email"
+               class="form-control"
+               formControlName="email"
+               placeholder="{{ emailLabel.innerHTML}}">
+        <div class="error"
+             *ngIf="email.errors && (email.dirty || email.touched)">
+          <p *ngIf="email.errors.required">
+            {{ 'field.error' | translate }}
+            {{ emailLabel.innerHTML}}
+            {{ 'required.error' | translate }}
+          </p>
+          <p *ngIf="email.errors.email">{{ 'field.error' | translate }}
+            {{ emailLabel.innerHTML}}
+            {{ 'field.format.invalid.error' | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="field" [ngClass]="{
+          'has-danger': phone.invalid && (phone.dirty || phone.touched),
+          'has-success': phone.valid && (phone.dirty || phone.touched)
+        }">
+        <label #phoneLabel for="phone">{{ 'user.form.actions.phone.label' | translate }}</label>
+        <div class="unEditableField" *ngIf="!editableFields.get('phone')"
+             (mouseover)="editableFields.set('phone', true)">
+          {{ mainSectionForm.get('phone').value }}
+        </div>
+        <input *ngIf="editableFields.get('phone')"
+               (mouseout)="setFieldUneditable('phone', phone.errors)"
+               type="text"
+               id="phone"
+               class="form-control"
+               formControlName="phone"
+               placeholder="{{ phoneLabel.innerHTML}}">
+        <div class="error"
+             *ngIf="phone.errors && (phone.dirty || phone.touched)">
+          <p *ngIf="phone.errors.required">
+            {{ 'field.error' | translate }}
+            {{ phoneLabel.innerHTML}}
+            {{ 'required.error' | translate }}
+          </p>
+          <p *ngIf="phone.errors.pattern">
+            {{ 'field.error' | translate }}
+            {{ phoneLabel.innerHTML}}
+            {{ 'field.format.invalid.error' | translate }}
+          </p>
+          <!--<p *ngIf="phone.errors.minlength">Password must be 8 characters long,-->
+          <!--we need another {{ phone.errors.minlength.requiredLength - phone.errors.minlength.actualLength}} characters </p>-->
+        </div>
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="field" [ngClass]="{
+        'has-danger': sex.invalid && (sex.dirty || sex.touched),
+        'has-success': sex.valid && (sex.dirty || sex.touched)
+      }">
+        <label #sexLabel for="sex">{{ 'user.form.actions.sex.label' | translate }}</label>
+        <div class="unEditableField" *ngIf="!editableFields.get('sex')"
+             (mouseover)="editableFields.set('sex', true)">
+          {{ getUneditableSexValue(mainSectionForm.get('sex').value) }}
+        </div>
+        <select *ngIf="editableFields.get('sex')"
+                (mouseout)="setFieldUneditable('sex', sex.errors)"
+                id="sex"
+                class="form-control"
+                formControlName="sex"
+                value="mainSectionForm.sex">
+          <option *ngFor="let sex of sexArray" [value]="userUtils.getKey(sex)">{{ userUtils.getValue(sex) }}</option>
+        </select>
+        <div class="error"
+             *ngIf="sex.errors && (sex.dirty || sex.touched)">
+          <p *ngIf="sex.errors.required">
+            {{ 'field.error' | translate }}
+            {{ sexLabel.innerHTML}}
+            {{ 'required.error' | translate }}
+          </p>
+        </div>
+      </div>
+      <div class="field cabinet-avatar" *ngIf="user.photo || this.imgSrc">
+        <label #photoLabel for="userPhoto">{{ 'user.form.actions.avatar.label' | translate }}</label>
+        <img width="100px" height="100px" id="userPhoto" [src]="getUserPhoto()"
+        />
+        <image-upload id="imageUploader"
+                      (uploadFinished)="onUploadFinished($event)"
+                      (removed)="onRemoved($event)"
+
+                      [buttonCaption]="getTranslationForChangePhotoButton()"
+                      [dropBoxMessage]="''">
+        </image-upload>
+      </div>
+      <div class="field" *ngIf="!user.photo && !this.imgSrc">
+        <label #photoLabel for="userPhoto">{{ 'user.form.actions.avatar.label' | translate }}</label>
+        <image-upload
+          (uploadFinished)="onUploadFinished($event)"
+          (removed)="onRemoved($event)"
+          [buttonCaption]="getTranslationForUpdatePhotoButton()"
+          [dropBoxMessage]="''">
+        </image-upload>
+      </div>
+    </div>
+
+    <h3 class="topbar">{{ 'user.form.actions.change.password.label' | translate }}</h3>
+    <form class="ui large width form change-password-form" novalidate
+          [formGroup]="changePasswordForm"
+          (ngSubmit)="onSubmitPasswordChange(changePasswordForm.value)">
+      <!--<div class="two field">-->
+          <div class="field" [ngClass]="{
+            'has-danger': oldPassword.invalid && (oldPassword.dirty || oldPassword.touched),
+            'has-success': oldPassword.valid && (oldPassword.dirty || oldPassword.touched)
+          }">
+            <label #oldpassword for="oldpassword">{{ 'user.form.actions.old.password.label' | translate }}</label>
+            <input type="password"
+                 id="oldpassword"
+                 class="form-control"
+                 formControlName="oldPassword"
+                 placeholder="{{ 'user.form.actions.old.password.label' | translate }}">
+            <div class="error"
+                 *ngIf="oldPassword.errors && (oldPassword.dirty || oldPassword.touched)">
+              <p *ngIf="oldPassword.errors.required">
+                {{ 'field.error' | translate }}
+                {{ oldpassword.innerHTML}}
+                {{ 'required.error' | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="field" [ngClass]="{
+                    'has-danger': password.invalid && (password.dirty || password.touched),
+                    'has-success': password.valid && (password.dirty || password.touched)
+                  }">
+            <label #passwordLabel for="password">{{ 'user.form.actions.new.password.label' | translate }}</label>
+            <input type="password"
+                   id="password"
+                   class="form-control"
+                   formControlName="password"
+                   placeholder="{{ passwordLabel.innerHTML}}">
+            <div class="error"
+                 *ngIf="password.errors && (password.dirty || password.touched)">
+              <p *ngIf="password.errors.required">
+                {{ 'field.error' | translate }}
+                {{ passwordLabel.innerHTML}}
+                {{ 'required.error' | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="field" [ngClass]="{
+                    'has-danger': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched),
+                    'has-success': confirmPassword.valid && (confirmPassword.dirty || confirmPassword.touched)
+                  }">
+            <label #confirmPasswordLabel for="confirmPassword">{{ 'user.form.actions.confirm.password.label' | translate }}
+            </label>
+            <input type="password"
+                   id="confirmPassword"
+                   class="form-control"
+                   formControlName="confirmPassword"
+                   placeholder="{{ confirmPasswordLabel.innerHTML }}">
+            <div class="error"
+                 *ngIf="password.errors && (password.dirty || password.touched)">
+              <p *ngIf="password.errors.required">
+                {{ 'field.error' | translate }}
+                {{ confirmPasswordLabel.innerHTML}}
+                {{ 'required.error' | translate }}
+              </p>
+            </div>
+          </div>
+
+          <div class="error"
+               *ngIf="changePasswordForm.controls.confirmPassword.errors?.MatchPassword
+                       && (confirmPassword.touched)">{{ 'password.doesnt.match.error' | translate }}
+          </div>
+      <button type="submit" [disabled]="changePasswordForm.invalid"
+              class="ui positive right floated button">{{ 'user.form.actions.submit.button' | translate }}
+      </button>
+    </form>
+    <div *ngIf="mainSectionForm.touched  && mainSectionForm.invalid"
+         class="error">{{ 'fill.all.fields.note' | translate }}
+    </div>
+    <div class="error" *ngIf="errorList">
+      <p *ngFor="let error of errorList">
+        {{error}}
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button (click)="goToPrevPage()"
+              class="ui positive left floated button">{{ 'user.form.actions.back.button' | translate }}
+      </button>
+      <button type="submit" [disabled]="mainSectionForm.invalid"
+              class="ui positive right floated button">{{ 'user.form.actions.submit.button' | translate }}
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,41 @@
+<div class="ui inverted segment">
+  <div class="ui inverted secondary pointing menu">
+    <a class="item" [routerLink]="['/']">
+      {{ 'top.menu.main.page' | translate }}
+    </a>
+    <a class="item" [routerLink]="['/store']" (click)="removeActiveFromCatalogList()">
+      {{ 'top.menu.store.page' | translate }}
+    </a>
+    <a class="item" [routerLink]="['/myCabinet']">
+      {{ 'top.menu.my.cabinet' | translate }}
+    </a>
+    <a class="item" *ngIf="this.authService.isAdmin()" [routerLink]="['/allUsers']">
+      {{ 'top.menu.all.users' | translate }}
+    </a>
+    <div class="right menu" >
+      <a class="item" [routerLink]="['/cart']">
+        {{ 'top.menu.cart' | translate }}
+      </a>
+      <a class="ui white circular label" *ngIf="cartLength > 0">{{ cartLength }}</a>
+
+      <div class="ui dropdown item" (mouseover)="showMenu()" (mouseout)="hideMenu()">
+        {{ 'top.menu.language' | translate }} <i class="dropdown icon"></i>
+        <div class="language_menu" >
+          <a *ngFor="let lang of translate.getLangs()" class="item"
+             (click)="makeTranslation(lang)" (mouseover)="showMenu()" (mouseout)="hideMenu()">
+            {{ getFullName(lang) }}
+          </a>
+        </div>
+      </div>
+      <a class="item" (click)="logout()" *ngIf="this.authService.isLoggedIn()">
+        {{ 'top.menu.log.out' | translate }}
+      </a>
+      <a class="item" [routerLink]="['/login']" *ngIf="!this.authService.isLoggedIn()">
+        {{ 'top.menu.log.in' | translate }}
+      </a>
+    </div>
+  </div>
+</div>
+
+<template #emptyCartPopup></template>
+

@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "_class": "com.nixsolutions.angular_boot.entity.users.User",
+    "active": 0,
+    "email": "admin@admin.ru",
+    "firstName": "Jack",
+    "lastName": "Bauer",
+    "password": "$2a$10$OD794y37YTf4lmdXWtqks.QVdoAVaE0EXhfK2QF2dy33ek6GyC6gy",
+    "phone": "1234567890",
+    "roles": [
+      { "$ref" : "roles", "id" : 2, "role": "ADMIN" }
+    ],
+    "sex": "man"
+  }
+]

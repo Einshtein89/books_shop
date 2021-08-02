@@ -1,0 +1,15 @@
+dependencies:
+- name: mongodb
+  repository: https://charts.bitnami.com/bitnami
+  version: 10.12.5
+- name: mongo-express
+  repository: https://cowboysysop.github.io/charts/
+  version: 2.3.1
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.8.3
+- name: kafka
+  repository: https://charts.bitnami.com/bitnami
+  version: 13.1.1
+digest: sha256:6d1dad536b68692192413d45065aea36f1734c20fe2ec289cbc1eaeb692205a2
+generated: "2021-07-28T16:11:37.839963+03:00"

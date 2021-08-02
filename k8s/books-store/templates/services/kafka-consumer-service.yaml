@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.kafkaConsumer.service.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "books-store.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.kafkaProducer.service.type }}
+  ports:
+    - port: {{ .Values.kafkaConsumer.service.port }}
+      targetPort: {{ .Values.kafkaConsumer.service.targetPort }}
+      protocol: {{ .Values.kafkaConsumer.service.protocol }}
+  selector:
+    app: {{ .Values.kafkaConsumer.service.selector }}

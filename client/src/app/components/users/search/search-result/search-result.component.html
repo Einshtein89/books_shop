@@ -1,0 +1,12 @@
+<a (click)="removeFading()" [routerLink]="['.', searchResult.id]"
+   [attr.data-tooltip]="getToolTipText()" data-inverted="" data-position="left center">
+  <div class="searchItem" [@resultAppearance]>
+    <div class="ui tiny image">
+      <img src="../../assets/icons/{{searchResult.sex}}.png">
+    </div>
+    <div class="middle aligned content">
+      {{searchResult.firstName}} {{searchResult.lastName}}
+    </div>
+  </div>
+</a>
+

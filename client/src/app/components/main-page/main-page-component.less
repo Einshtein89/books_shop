@@ -1,0 +1,128 @@
+@import "../../../themes.less";
+
+.slider-wrap {
+  position: relative;
+}
+
+.button-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.position-absolute {
+  position: absolute!important;
+}
+
+.align-items-center {
+  align-items: center!important;
+}
+
+.pug-btn {
+  font-family: inherit;
+  padding: .5em 1em;
+  color: @main-page-red-button-color;
+  border: @main-page-button-border;
+  background-color: @background-color-default;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  -webkit-transition: .2s ease-in!important;
+  transition: .2s ease-in!important;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  width: auto;
+  display: inline-block;
+  zoom: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.go-to-store {
+  font-size: 2.2em;
+  padding: 15px;
+  background: @main-page-red-button-background;
+  color: @main-page-red-button-color;
+  border: @main-page-red-button-border;
+  margin: 4% auto 15px;
+}
+
+.logo {
+  text-align: center;
+}
+
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px!important;
+  padding-right: 15px!important;
+}
+
+.icon-bar-container {
+  display: flex;
+  justify-content: center;
+}
+
+.py-4 {
+  padding-bottom: 1.5rem!important;
+  padding-top: 1.5rem!important;
+}
+
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.icon-bar-item {
+  padding: 40px;
+  display: block;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-flex: 1;
+  flex: 1 1 0;
+}
+
+.icon-bar-item-card {
+  color: @main-page-icon-bar-color;
+  background: @main-page-icon-bar-background;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+}
+
+.card {
+  box-shadow: @main-page-card-shadow;
+  transition: @main-page-card-transition;
+}

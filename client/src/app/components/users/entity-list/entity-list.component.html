@@ -1,0 +1,48 @@
+<div *ngIf="!loading">
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="push">
+      <mat-list>
+        <mat-list-item>
+          <button (click)="showAddEntityForm()"
+                  class="ui positive button">{{ 'all.users.page.add.button' | translate }}
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <entities-per-page [entityListComponent]="this"></entities-per-page>
+        </mat-list-item>
+        <mat-list-item>
+          <sorting-entities [entityListComponent]="this" [sortOptions]="getSortOptions()"></sorting-entities>
+        </mat-list-item>
+        <mat-list-item>
+          <p class="change-format-label">Change format:</p>
+          <div class="ui toggle checkbox" (click)="toggleView()">
+            <input type="checkbox" name="toggleView">
+            <label *ngIf="isTabFormat;">Tab</label>
+            <label *ngIf="!isTabFormat;">List</label>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="menu-icon">
+        <img src="assets/icons/menu_icon.png" style="height: 40px; width: 40px;" mat-button
+             (mouseover)="sidenav.toggle()"/>
+      </div>
+      <search [entityListComponent]="this"></search>
+
+      <div [ngClass]="{'cards special link': isTabFormat, 'container relaxed items': !isTabFormat}" class="ui">
+        <single-entity [ngClass]="{'card': isTabFormat}"
+                       *ngFor="let entity of entityList"
+                       [entity]="entity"
+                       [editForm]="addEditContainerRef"
+                       [entityListComponent]="this"
+                       [isTabFormat] = "isTabFormat">
+        </single-entity>
+      </div>
+      <pagination [entityListComponent]="this"></pagination>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <template #addEditEntity></template>
+</div>
+

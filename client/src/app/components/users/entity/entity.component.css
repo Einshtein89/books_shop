@@ -1,0 +1,12 @@
+.item {
+  border: 1px solid black!important;
+  border-radius: 5px!important;
+  width: 60% !important;
+  float: left;
+}
+
+.user-buttons {
+  height: 100px;
+  position: fixed;
+  right: 500px;
+}

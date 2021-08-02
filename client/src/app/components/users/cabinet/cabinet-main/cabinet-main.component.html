@@ -1,0 +1,18 @@
+<div class="ui grid top-margin">
+  <div class="four wide column left-menu">
+    <div class="ui vertical fluid tabular menu">
+      <a class="item active" (click)="makeActive($event)" [routerLink]="['./home']">
+        {{ 'my.cabinet.title' | translate }}
+      </a>
+      <a class="item" (click)="makeActive($event)" [routerLink]="['./orders']">
+        {{ 'my.orders.title' | translate }}
+      </a>
+    </div>
+  </div>
+  <div class="twelve wide stretched column right-content">
+    <div class="ui segment">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+{{- if .Values.custom_mongo_express.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.custom_mongo_express.service.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "books-store.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ .Values.custom_mongo_express.name }}
+  type: {{ .Values.custom_mongo_express.service.type }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.custom_mongo_express.service.port }}
+      targetPort: {{ .Values.custom_mongo_express.service.targetPort }}
+#      nodePort: {{ .Values.custom_mongo_express.service.nodePort }}
+{{- end }}

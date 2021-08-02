@@ -1,0 +1,151 @@
+{
+  "top.menu": {
+    "main.page": "Home",
+    "store.page": "Book Store",
+    "my.cabinet": "My Cabinet",
+    "all.users": "All Users",
+    "log.out": "Log Out",
+    "log.in": "Log In",
+    "language": "Language",
+    "cart": "Cart"
+  },
+  "footer": {
+    "quick.links": "Quick Links"
+  },
+  "main.page": {
+    "go.to.store.button": "Go To Store",
+    "first.card": {
+      "title": "Fast",
+      "text": "Shopping in 3 clicks!"
+    },
+    "second.card": {
+      "title": "Easy",
+      "text": "User-friendly interface!"
+    },
+    "third.card": {
+      "title": "Cheap",
+      "text": "Best prices ever!"
+    }
+  },
+  "login.page": {
+    "form": {
+      "welcome": "Welcome!",
+      "email.label": "E-mail",
+      "password.label": "Password",
+      "login.button": "Login",
+      "register": "Register",
+      "incorrect.credentials.error": "Incorrect credentials."
+    }
+  },
+  "store": {
+    "page": {
+      "sort.by": "Sort by...",
+      "sort.by.price.from.lowest": "price,asc;Price from lowest",
+      "sort.by.price.from.highest": "price,desc;Price from highest",
+      "add.to.cart": "Add To Cart",
+      "popup.your.cart": "Your Cart",
+      "popup.category": "Category",
+      "popup.cover": "Cover",
+      "popup.author": "Author",
+      "popup.title": "Title",
+      "popup.price": "Price",
+      "popup.amount": "Amount",
+      "popup.actions": "Actions",
+      "popup.empty.cart": "Your cart is empty! Please add a book to proceed.",
+      "popup.continue.shopping": "Continue shopping",
+      "popup.goto.cart": "Go to cart"
+    },
+    "catalog": {
+      "Sci-Fi": "Sci-Fi",
+      "Fantasy": "Fantasy",
+      "Novel": "Novel",
+      "Physics": "Physics"
+    }
+  },
+  "cart" : {
+    "page": {
+      "menu.order.check" : "Order Check",
+      "menu.order.confirmation" : "Order Confirmation",
+      "menu.authorization" : "Authorization",
+      "next.button" : "Continue >",
+      "header.cart" : "Cart",
+      "header.confirmation" : "Order confirmation",
+      "back.button": "Back",
+      "login.header.message" : "Authorization",
+      "login.choose.text" : "Please do one of the following to proceed:",
+      "order.confirm.button" : "Confirm Order",
+      "order.details" : "Confirm Order",
+      "back.to.shopping" : "Back to shopping",
+      "user.details" : "User Details"
+    }
+  },
+  "all.users.page": {
+    "add.button": "Add User",
+    "entities.per.page": "Entities per Page",
+    "sort.by": "Sort by...",
+    "sort.by.first.name.up": "firstName,asc;First Name up",
+    "sort.by.first.name.down": "firstName,desc;First Name down"
+  },
+  "user.form.actions": {
+    "register.title": "Register",
+    "edit.title": "Edit user",
+    "add.title": "Add new user",
+    "first.name.label": "First Name",
+    "last.name.label": "Last Name",
+    "email.label": "E-mail",
+    "phone.label": "Phone",
+    "sex.label": "Sex",
+    "avatar.label": "Photo",
+    "sex.man": "man;Man",
+    "sex.woman": "woman;Woman",
+    "password.label": "Password",
+    "change.password.label": "Change Password",
+    "old.password.label": "Old Password",
+    "new.password.label": "New Password",
+    "confirm.password.label": "Confirm Password",
+    "cancel.button": "Cancel",
+    "back.button": "Back",
+    "submit.button": "Submit",
+    "edit.button": "Edit",
+    "delete.button": "Delete",
+    "more.button": "More...",
+    "user.created.1": "User ",
+    "user.created.2": " was created!",
+    "user.updated.2": " was updated!",
+    "confirm.popup.title": "Confirm",
+    "delete.confirm.popup.title": "Delete Confirmation",
+    "delete.confirm.popup.content": "Do you really want to delete ",
+    "photo.upload.button.label": "Upload",
+    "photo.change.button.label": "Change",
+    "cabinet.main.section.label": "My Information"
+  },
+  "my": {
+    "orders": {
+      "authorization" : {
+        "hi" : "Hi",
+        "registered.may.proceed" : "As you are registered user, you may now proceed!"
+      },
+      "title": "My Orders",
+      "no.orders": "You have no orders yet!",
+      "order.id.header": "Order Id",
+      "position.number.header" : "Position #",
+      "total.amount" : "Total Amount",
+      "books.count": "Books Total Count"
+    },
+    "cabinet.title": "My Cabinet"
+  },
+  "field.error": "Field",
+  "required.error": "is required",
+  "maxlength.error": "maxlength is ",
+  "field.format.invalid.error": "has invalid format",
+  "password.doesnt.match.error": "Password doesn't match",
+  "fill.all.fields.note": "Please fill in all required fields and correct all errors before submitting the form",
+  "empty.property": " ; ",
+  "backend.validation.errors": {
+    "user.byNames.exists.error": "User with such First Name or Last Name already exists!",
+    "user.byEmail.exists.error": "User with such E-mail already exists!",
+    "user.doesn't.exists.error": "No user to be updated!",
+    "old.password.doesn't.match.error": "Old password doesn't match!"
+  },
+  "loading.message": "Please wait"
+}

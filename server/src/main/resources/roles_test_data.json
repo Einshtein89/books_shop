@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "_class": "com.nixsolutions.angular_boot.entity.users.Role",
+    "role": "USER"
+  },
+  {
+    "id": 2,
+    "_class": "com.nixsolutions.angular_boot.entity.users.Role",
+    "role": "ADMIN"
+  }
+]

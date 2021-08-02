@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "_class": "com.nixsolutions.angular_boot.entity.Book",
+    "author": "John Snow",
+    "catalog": { "$ref" : "catalogs", "id" : 1, "name": "Sci-Fi"
+    },
+    "price": 200.99,
+    "title": "I know nothing"
+  },
+  {
+    "id": 2,
+    "_class": "com.nixsolutions.angular_boot.entity.Book",
+    "author": "Steve Jobs",
+    "catalog": { "$ref" : "catalogs", "id" : 2, "name": "Fantasy" },
+    "price": 599.99,
+    "title": "Eat Apples"
+  }
+]

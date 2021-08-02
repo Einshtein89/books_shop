@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "_class": "com.nixsolutions.angular_boot.entity.Catalog",
+    "name": "Sci-Fi"
+  },
+  {
+    "id": 2,
+    "_class": "com.nixsolutions.angular_boot.entity.Catalog",
+    "name": "Fantasy"
+  },
+  {
+    "id": 3,
+    "_class": "com.nixsolutions.angular_boot.entity.Catalog",
+    "name": "Novel"
+  },
+  {
+    "id": 4,
+    "_class": "com.nixsolutions.angular_boot.entity.Catalog",
+    "name": "Physics"
+  }
+]

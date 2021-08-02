@@ -1,0 +1,23 @@
+<div class="ui inverted segment">
+  <p style="text-align: center">{{ 'footer.quick.links' | translate }}:
+    <a [routerLink]="['./home']">
+      | {{ 'top.menu.main.page' | translate }} |
+    </a>
+    <a [routerLink]="['./store']">
+      {{ 'top.menu.store.page' | translate }} |
+    </a>
+    <a [routerLink]="['./myCabinet']">
+      {{ 'top.menu.my.cabinet' | translate }} |
+    </a>
+    <a *ngIf="this.authService.isAdmin()" [routerLink]="['./allUsers']">
+      {{ 'top.menu.all.users' | translate }} |
+    </a>
+    <a (click)="logout()" *ngIf="this.authService.isLoggedIn()">
+      {{ 'top.menu.log.out' | translate }} |
+    </a>
+    <a *ngIf="!this.authService.isLoggedIn()" [routerLink]="['./login']" >
+      {{ 'top.menu.log.in' | translate }}
+    </a>
+  </p>
+  <p style="text-align: center">Powered by Einshtein</p>
+</div>

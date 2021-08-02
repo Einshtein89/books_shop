@@ -1,0 +1,47 @@
+<ng-container *ngIf="isTabFormat; else elseBlock">
+  <div class="blurring dimmable image">
+    <div class="ui dimmer">
+      <div class="content">
+        <div class="center">
+          <button class="ui inverted button"
+                  (click)="editUser()">{{ 'user.form.actions.edit.button' | translate }}</button>
+          <button class="ui inverted button"
+                  (click)="removeUser()">{{ 'user.form.actions.delete.button' | translate }}</button>
+          <br/>
+          <br/>
+          <a [routerLink]="['.', entity.id]">
+            <button class="ui inverted button">{{ 'user.form.actions.more.button' | translate }}</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <img [src]="getUserPhoto()">
+  </div>
+
+  <a class="ui large header">
+    {{ entity.firstName }} {{ entity.lastName }}
+  </a>
+  <div class="meta">{{ entity.phone }}</div>
+</ng-container>
+<ng-template #elseBlock>
+  <div class="item ui dropdown">
+    <div class="ui tiny image">
+      <img [src]="getUserPhoto()">
+    </div>
+    <div class="middle aligned content" >
+      <a class="ui large header">
+        {{ entity.firstName }} {{ entity.lastName }}
+      </a>
+    </div>
+    <div style="height: 100px; position: relative; left: 200px;">
+      <button style="width: 100px!important;" class="ui button item"
+              (click)="editUser()">{{ 'user.form.actions.edit.button' | translate }}</button>
+      <button class="ui  button item"
+              (click)="removeUser()">{{ 'user.form.actions.delete.button' | translate }}</button>
+      <a [routerLink]="['.', entity.id]">
+        <button class="ui button item">{{ 'user.form.actions.more.button' | translate }}</button>
+      </a>
+    </div>
+  </div>
+
+</ng-template>

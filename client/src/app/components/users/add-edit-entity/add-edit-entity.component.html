@@ -1,0 +1,205 @@
+<!--<div *ngIf="loading"><img class="spinner" src="assets/ajax-loader.gif"></div>-->
+<div class="modal fade" id="addEditUserModal">
+  <div [ngClass]="{'modal-dialog': _isModal}">
+
+    <!-- Modal content-->
+    <div [ngClass]="{'modal-content': _isModal}">
+      <div [ngClass]="{'modal-header': _isModal}">
+        <button *ngIf="_isModal" type="button" class="close" data-dismiss="modal" (click)="removeModal()">&times;</button>
+        <h2 class="title" *ngIf="!this._currentUser && _isModal">{{ 'user.form.actions.add.title' | translate }}</h2>
+        <h2 class="title" *ngIf="this._currentUser && _isModal">{{ 'user.form.actions.edit.title' | translate }}</h2>
+        <h2 class="title" *ngIf="!_isModal" [ngClass]="{'header-centered': !_isModal}">{{ 'user.form.actions.register.title' | translate }}</h2>
+      </div>
+      <div class="modal-body">
+        <div class="ui main text container">
+          <form class="ui large form segment" novalidate
+                [formGroup]="myForm"
+                (ngSubmit)="onSubmit(myForm.value)">
+            <div class="field" [ngClass]="{
+              'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
+              'has-success': firstName.valid && (firstName.dirty || firstName.touched)
+            }">
+              <label #firstNameLabel for="firstName">{{ 'user.form.actions.first.name.label' | translate }}</label>
+              <input type="text"
+                     id="firstName"
+                     class="form-control"
+                     formControlName="firstName"
+                     placeholder="{{ firstNameLabel.innerHTML}}">
+              <div class="error"
+                   *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
+                <p *ngIf="firstName.errors.required">
+                  {{ 'field.error' | translate }}
+                  {{ firstNameLabel.innerHTML}}
+                  {{ 'required.error' | translate }}
+                </p>
+                <p *ngIf="firstName.errors.maxlength">
+                  {{ 'field.error' | translate }}
+                  {{ firstNameLabel.innerHTML}}
+                  {{ 'maxlength.error' | translate }}
+                  {{ firstName.errors.maxlength.requiredLength }}
+                </p>
+              </div>
+            </div>
+
+            <div class="field" [ngClass]="{
+              'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
+              'has-success': lastName.valid && (lastName.dirty || lastName.touched)
+            }">
+              <label #lastNameLabel for="lastName">{{ 'user.form.actions.last.name.label' | translate }}</label>
+              <input type="text"
+                     id="lastName"
+                     class="form-control"
+                     formControlName="lastName"
+                     placeholder="{{ lastNameLabel.innerHTML }}">
+              <div class="error"
+                   *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
+                <p *ngIf="lastName.errors.required">{{ 'field.error' | translate }}
+                  {{ lastNameLabel.innerHTML}}
+                  {{ 'required.error' | translate }}
+                </p>
+                <p *ngIf="lastName.errors.maxlength">
+                  {{ 'field.error' | translate }}
+                  {{ firstNameLabel.innerHTML}}
+                  {{ 'maxlength.error' | translate }}
+                  {{ lastName.errors.maxlength.requiredLength }}
+                </p>
+              </div>
+            </div>
+            <div class="field" [ngClass]="{
+              'has-danger': email.invalid && (email.dirty || email.touched),
+              'has-success': email.valid && (email.dirty || email.touched)
+            }">
+              <label #emailLabel for="email">{{ 'user.form.actions.email.label' | translate }}</label>
+              <input type="text"
+                     id="email"
+                     class="form-control"
+                     formControlName="email"
+                     placeholder="{{ emailLabel.innerHTML}}">
+              <div class="error"
+                   *ngIf="email.errors && (email.dirty || email.touched)">
+                <p *ngIf="email.errors.required">
+                  {{ 'field.error' | translate }}
+                  {{ emailLabel.innerHTML}}
+                  {{ 'required.error' | translate }}
+                </p>
+                <p *ngIf="email.errors.email">
+                  {{ 'field.error' | translate }}
+                  {{ emailLabel.innerHTML}}
+                  {{ 'field.format.invalid.error' | translate }}
+                </p>
+              </div>
+            </div>
+            <div class="field" [ngClass]="{
+              'has-danger': phone.invalid && (phone.dirty || phone.touched),
+              'has-success': phone.valid && (phone.dirty || phone.touched)
+            }">
+              <label #phoneLabel for="phone">{{ 'user.form.actions.phone.label' | translate }}</label>
+              <input type="text"
+                     id="phone"
+                     class="form-control"
+                     formControlName="phone"
+                     placeholder="{{ phoneLabel.innerHTML}}">
+              <div class="error"
+                   *ngIf="phone.errors && (phone.dirty || phone.touched)">
+                <p *ngIf="phone.errors.required">
+                  {{ 'field.error' | translate }}
+                  {{ phoneLabel.innerHTML}}
+                  {{ 'required.error' | translate }}
+                </p>
+                <p *ngIf="phone.errors.pattern">
+                  {{ 'field.error' | translate }}
+                  {{ phoneLabel.innerHTML}}
+                  {{ 'field.format.invalid.error' | translate }}
+                </p>
+                <!--<p *ngIf="phone.errors.minlength">Password must be 8 characters long,-->
+                <!--we need another {{ phone.errors.minlength.requiredLength - phone.errors.minlength.actualLength}} characters </p>-->
+              </div>
+            </div>
+            <div class="field" [ngClass]="{
+              'has-danger': sex.invalid && (sex.dirty || sex.touched),
+              'has-success': sex.valid && (sex.dirty || sex.touched)
+            }">
+              <label #sexLabel for="sex">{{ 'user.form.actions.sex.label' | translate }}</label>
+              <select id="sex"
+                      class="form-control"
+                      formControlName="sex"
+                      value ="myForm.sex">
+                <option *ngFor="let sex of sexArray" [value]="userUtils.getKey(sex)">{{ userUtils.getValue(sex) }}</option>
+              </select>
+              <div class="error"
+                   *ngIf="sex.errors && (sex.dirty || sex.touched)">
+                <p *ngIf="sex.errors.required">
+                  {{ 'field.error' | translate }}
+                  {{ sexLabel.innerHTML}}
+                  {{ 'required.error' | translate }}
+                </p>
+              </div>
+            </div>
+            <div *ngIf="!_isEdit">
+              <div class="field" [ngClass]="{
+                'has-danger': password.invalid && (password.dirty || password.touched),
+                'has-success': password.valid && (password.dirty || password.touched)
+              }">
+                <label #passwordLabel for="password">{{ 'user.form.actions.password.label' | translate }}</label>
+                <input type="password"
+                       id="password"
+                       class="form-control"
+                       formControlName="password"
+                       placeholder="{{ passwordLabel.innerHTML}}">
+                <div class="error"
+                     *ngIf="password.errors && (password.dirty || password.touched)">
+                  <p *ngIf="password.errors.required">
+                    {{ 'field.error' | translate }}
+                    {{ passwordLabel.innerHTML}}
+                    {{ 'required.error' | translate }}
+                  </p>
+                </div>
+              </div>
+              <div class="field" [ngClass]="{
+                'has-danger': confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched),
+                'has-success': confirmPassword.valid && (confirmPassword.dirty || confirmPassword.touched)
+              }">
+                <label #confirmPasswordLabel for="confirmPassword">{{ 'user.form.actions.confirm.password.label' | translate }}
+                </label>
+                <input type="password"
+                       id="confirmPassword"
+                       class="form-control"
+                       formControlName="confirmPassword"
+                       placeholder="{{ confirmPasswordLabel.innerHTML }}">
+                <div class="error"
+                     *ngIf="password.errors && (password.dirty || password.touched)">
+                  <p *ngIf="password.errors.required">
+                    {{ 'field.error' | translate }}
+                    {{ confirmPasswordLabel.innerHTML}}
+                    {{ 'required.error' | translate }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="error"
+                   *ngIf="myForm.controls.confirmPassword.errors?.MatchPassword
+                   && (confirmPassword.touched)">{{ 'password.doesnt.match.error' | translate }}
+              </div>
+            </div>
+            <div *ngIf="myForm.touched  && myForm.invalid"
+                 class="error">{{ 'fill.all.fields.note' | translate }}
+            </div>
+            <div class="error" *ngIf="errorList">
+              <p *ngFor="let error of errorList">
+                {{error}}
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button (click)="_isModal ? removeModal() : goToPrevPage()"
+                      class="ui positive left floated button">{{ 'user.form.actions.cancel.button' | translate }}
+              </button>
+              <button type="submit" [disabled]="myForm.invalid"
+                      class="ui positive right floated button">{{ 'user.form.actions.submit.button' | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

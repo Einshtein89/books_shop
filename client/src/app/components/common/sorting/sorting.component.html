@@ -1,0 +1,13 @@
+<div class="sorting right floated">
+  <!--<label for="entitiesPerPageDropdown">Entities per Page:</label>-->
+  <mat-form-field>
+    <mat-select placeholder="{{ 'all.users.page.sort.by' | translate }}"
+                (change)="sortPage($event.value)"
+                id="sortByDropdown"
+                [value]="this.paginationService.sortBy">
+      <mat-option *ngFor="let option of sortOptions" [value]="getKey(option)">
+        {{ getValue(option) }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

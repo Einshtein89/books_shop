@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Values.namespace }}
+  name: {{ .Values.configmap.name }}
+data:
+  #name of the service of the deployment we need serves as a url.
+  MONGODB_SERVER_URL: "{{ .Release.Name }}-{{ .Values.mongodb.service.nameOverride }}:{{ .Values.mongodb.service.port }}" #port number should correspond to port from service
+  MONGODB_SERVER_URL_WITHOUT_PORT: "{{ .Release.Name }}-{{ .Values.mongodb.service.nameOverride }}"
+  MONGODB_SERVER_MONGODB_PORT: "{{ .Values.mongodb.service.port }}"
+  KAFKA_URL: "{{ .Release.Name }}-{{ .Values.kafka.service.name }}:{{ .Values.kafka.service.port }}"
+  REDIS_SERVER_HOST: "{{ .Release.Name }}-{{ .Values.redis.service.name }}"
+  REDIS_SERVER_PORT: "{{ .Values.redis.service.port }}"
+  KAFKA_PRODUCER_URL: "{{ .Values.kafkaProducer.service.name }}:{{ .Values.kafkaProducer.service.port }}"
+  KAFKA_CONSUMER_URL: "{{ .Values.kafkaConsumer.service.name }}:{{ .Values.kafkaConsumer.service.port }}"

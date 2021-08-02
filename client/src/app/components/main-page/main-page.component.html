@@ -1,0 +1,60 @@
+<div class="logo">
+  <img src="../../assets/logo/bookstore-logo.jpg" width="250px" height="200px"/>
+</div>
+<div class="slider-wrap">
+  <slideshow [imageUrls]="imageUrlArray"
+             [hideOnNoSlides]="true"
+             [height]="'400px'"
+             [stopAutoPlayOnSlide]="false"
+             [autoPlayInterval]="5000"
+             [showDots]="true"
+             [showCaptions]="true"
+             [captionBackground]="'rgba(0, 0, 0, .35)'"
+             [captionColor]="'#FFF'"
+             [autoPlay]="true">
+  </slideshow>
+  <div class="button-wrap">
+    <div class=" d-flex align-items-center justify-content-center position-absolute">
+      <button class="location-button pug-btn pug-btn-primary go-to-store" (click)="goToStore()">
+        {{ 'main.page.go.to.store.button' | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+<div  class="container-fluid app-small-icon-bar-with-boxes shadow ng-star-inserted">
+  <div  class="row icon-bar-container py-4" style="min-height: 425px;">
+    <div  class="col-md-4 col-xs-12 text-center icon-bar-item">
+      <div  class="card box icon-bar-item-card">
+        <img  class="primary-icon ng-star-inserted" src="../../assets/icons/book_icon_1.png" alt="" title="" style="max-height: 100px;">
+        <h5  class="small-icon-bar-title ng-star-inserted" style="font-size: 30px;">
+          {{ 'main.page.first.card.title' | translate }}
+        </h5>
+        <p style="font-size: 20px; min-height: 3em;">
+          {{ 'main.page.first.card.text' | translate }}
+        </p>
+      </div>
+    </div>
+    <div  class="col-md-4 col-xs-12 text-center icon-bar-item">
+      <div  class="card box icon-bar-item-card">
+        <img  class="primary-icon ng-star-inserted" src="../../assets/icons/book_icon_2.png" alt="" title="" style="max-height: 100px;">
+        <h5 style="font-size: 30px;">
+          {{ 'main.page.second.card.title' | translate }}
+        </h5>
+        <p style="font-size: 20px; min-height: 3em;">
+          {{ 'main.page.second.card.text' | translate }}
+        </p>
+      </div>
+    </div>
+    <div  class="col-md-4 col-xs-12 text-center icon-bar-item">
+      <div  class="card box icon-bar-item-card">
+        <img  class="primary-icon ng-star-inserted" src="../../assets/icons/book_icon_3.png" alt="" title="" style="max-height: 100px;">
+        <h5 style="font-size: 30px;">
+          {{ 'main.page.third.card.title' | translate }}
+        </h5>
+        <p style="font-size: 20px; min-height: 3em;">
+          {{ 'main.page.third.card.text' | translate }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

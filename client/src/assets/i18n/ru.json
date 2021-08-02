@@ -1,0 +1,150 @@
+{
+  "top.menu": {
+    "main.page": "Домой",
+    "store.page": "Магазин",
+    "my.cabinet": "Мой кабинет",
+    "all.users": "Все пользователи",
+    "log.out": "Выйти",
+    "log.in": "Войти",
+    "language": "Язык",
+    "cart": "Корзина"
+  },
+  "footer": {
+    "quick.links": "Быстрые Ссылки"
+  },
+  "main.page": {
+    "go.to.store.button": "В Магазин",
+    "first.card": {
+      "title": "Быстро",
+      "text": "Покупка в 3 клика!"
+    },
+    "second.card": {
+      "title": "Легко",
+      "text": "Удобный интерфейс!"
+    },
+    "third.card": {
+      "title": "Дешего",
+      "text": "Лучшие цены!"
+    }
+  },
+  "login.page": {
+    "form": {
+      "welcome": "Добро пожаловать!",
+      "email.label": "Эл. Почта",
+      "password.label": "Пароль",
+      "login.button": "Войти",
+      "register": "Регистрация",
+      "incorrect.credentials.error": "Неверный логин или пароль!"
+    }
+  },
+  "store": {
+    "page": {
+      "sort.by": "Сортировать по...",
+      "sort.by.price.from.lowest": "price,asc;По цене от дешевых к дорогим",
+      "sort.by.price.from.highest": "price,desc;По цене от дорогих к дешевым",
+      "add.to.cart": "В Корзину",
+      "popup.your.cart": "Ваша Корзина",
+      "popup.category": "Категория",
+      "popup.cover": "Обложка",
+      "popup.author": "Автор",
+      "popup.title": "Название",
+      "popup.price": "Цена",
+      "popup.amount": "Кол-во",
+      "popup.actions": "Действия",
+      "popup.empty.cart": "Ваша корзина пуста! Пожалуйста, добавьте товар, чтобы продолжить.",
+      "popup.continue.shopping": "Продолжить покупки",
+      "popup.goto.cart": "В Корзину"
+    },
+    "catalog": {
+      "Sci-Fi": "Научная фантастика",
+      "Fantasy": "Фэнтези",
+      "Novel": "Роман",
+      "Physics": "Физика"
+    }
+  },
+  "cart" : {
+    "page": {
+      "menu.order.check" : "Проверка заказа",
+      "menu.order.confirmation" : "Подтверждение заказа",
+      "menu.authorization" : "Авторизация",
+      "next.button" : "Далее >",
+      "header.cart" : "Корзина",
+      "header.confirmation" : "Подтверждение заказа",
+      "back.button": "Назад",
+      "login.header.message" : "Авторизация",
+      "login.choose.text" : "Пожалуйста, выполните одно из следующих действий, чтобы продолжить:",
+      "order.confirm.button" : "Заказать",
+      "order.details" : "Подробности заказа",
+      "back.to.shopping" : "Назад в магазин",
+      "user.details" : "Данные пользователя"
+    }
+  },
+  "all.users.page": {
+    "add.button": "Доб. Польз",
+    "entities.per.page": "Сущностей на стран.",
+    "sort.by": "Сортировать по...",
+    "sort.by.first.name.up": "firstName,asc;Имя по возрастанию",
+    "sort.by.first.name.down": "firstName,desc;Имя по убыванию"
+  },
+  "user.form.actions": {
+    "register.title": "Регистрация",
+    "edit.title": "Редактировать пользователя",
+    "add.title": "Добавить нового пользователя",
+    "first.name.label": "Имя",
+    "last.name.label": "Фамилия",
+    "email.label": "Эл. Почта",
+    "phone.label": "Телефон",
+    "sex.label": "Пол",
+    "avatar.label": "Фото",
+    "sex.man": "man;Мужской",
+    "sex.woman": "woman;Женский",
+    "password.label": "Пароль",
+    "change.password.label": "Сменить пароль",
+    "old.password.label": "Старый пароль",
+    "new.password.label": "Новый пароль",
+    "confirm.password.label": "Подтверждение пароля",
+    "cancel.button": "Отмена",
+    "back.button": "Назад",
+    "submit.button": "Отправить",
+    "edit.button": "Ред-ть",
+    "delete.button": "Удалить",
+    "more.button": "Еще...",
+    "user.created.1": "Пользователь ",
+    "user.created.2": " был создан!",
+    "user.updated.2": " был обновлен!",
+    "confirm.popup.title": "Подтверждение",
+    "delete.confirm.popup.title": "Подтверждение удаления",
+    "delete.confirm.popup.content": "Вы действительно хотите удалить ",
+    "photo.upload.button.label": "Загрузить",
+    "photo.change.button.label": "Изменить",
+    "cabinet.main.section.label": "Мои данные"
+  },
+  "my": {
+    "orders": {
+      "authorization" : {
+        "hi" : "Здравствуйте",
+        "registered.may.proceed" : "Так как Вы зарегистрированный пользователь, Вы можете продолжить!"
+      },
+      "title": "Мои Заказы",
+      "no.orders": "У Вас еще нет заказов!",
+      "order.id.header": "№ Заказа",
+      "position.number.header" : "№ Позиции",
+      "total.amount" : "Общая сумма",
+      "books.count": "Всего книг"
+    },
+    "cabinet.title": "Мой Кабинет"
+  },
+  "field.error": "Поле",
+  "required.error": "обязательно",
+  "maxlength.error": "не должно превышать ",
+  "field.format.invalid.error": "имеет формат",
+  "password.doesnt.match.error": "Пароли не совпадают",
+  "fill.all.fields.note": "Пожалуйста, заполните все необходимые поля перед отправкой формы",
+  "backend.validation.errors": {
+    "user.byNames.exists.error": "Пользователь с таким именем и фамилией уже существует!",
+    "user.byEmail.exists.error": "Пользователь с таким адресом эл. почты уже существует!",
+    "user.doesn't.exists.error": "Нет пользователя для обновления!",
+    "old.password.doesn't.match.error": "Старый пароль не соответствует!"
+  },
+  "loading.message": "Пожалуйста, подождите"
+}

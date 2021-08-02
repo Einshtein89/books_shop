@@ -1,0 +1,10 @@
+
+<div class="search-result-list">
+  <div *ngIf="_searchResults.length == 0" class="search-result-list searchItem">No results found</div>
+  <div *ngIf="_searchResults.length > 0" class="search-result-list" >
+    <search-result  class="ui divided items"
+                   *ngFor="let result of _searchResults"
+                   [searchResult]="result">
+    </search-result>
+  </div>
+</div>

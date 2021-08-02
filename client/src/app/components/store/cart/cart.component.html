@@ -1,0 +1,20 @@
+<div class="ui grid top-margin">
+  <div class="four wide column left-menu">
+    <div class="ui vertical fluid tabular menu">
+      <a class="item active" id="order" [routerLink]="['./check']">
+         {{ 'cart.page.menu.order.check' | translate }}
+      </a>
+      <a class="item" id="authorization" [routerLink]="['./authorization']">
+        {{ 'cart.page.menu.authorization' | translate }}
+      </a>
+      <a class="item" id="authorization" [routerLink]="['./confirmation']">
+        {{ 'cart.page.menu.order.confirmation' | translate }}
+      </a>
+    </div>
+  </div>
+  <div class="twelve wide stretched column right-content">
+    <div class="ui segment">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

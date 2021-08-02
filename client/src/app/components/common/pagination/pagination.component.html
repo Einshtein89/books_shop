@@ -1,0 +1,21 @@
+<div class="center">
+  <ul *ngIf="this.entityListComponent.page" class="pagination">
+    <li *ngIf="this.entityListComponent.page.number !== 0">
+      <a (click)="getFirstPage()">«</a>
+    </li>
+    <li *ngIf="this.entityListComponent.page.number !== 0">
+      <a (click)="getPreviousPage()"><</a>
+    </li>
+    <!--{#pages}-->
+    <li *ngFor="let page of pageArray" [ngClass]="{active:this.entityListComponent.page.number === page}">
+      <a (click)="getPage(page, this.entityListComponent.name)">{{ page + 1 }}</a>
+    </li>
+    <!--{/pages}-->
+    <li *ngIf="this.entityListComponent.page.totalElements !== 0 && this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
+      <a (click)="getNextPage()">></a>
+    </li>
+    <li *ngIf="this.entityListComponent.page.totalElements !== 0 && this.entityListComponent.page.number !== this.entityListComponent.page.totalPages - 1">
+      <a (click)="getLastPage()">»</a>
+    </li>
+  </ul>
+</div>

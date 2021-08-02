@@ -1,0 +1,227 @@
+@import '../node_modules/@angular/material/prebuilt-themes/purple-green.css';
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/semantic-ui/dist/semantic.min.css';
+@import '../node_modules/jquery-confirm/dist/jquery-confirm.min.css';
+@import 'app/styles/confirm-modal.less';
+@import "themes.less";
+
+.error {
+  color: @error;
+}
+
+.ui.link.cards {
+  margin-top: 10px;
+}
+
+.ui.items .item .image {
+  position: relative;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  display: block;
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ui.items .item .image+[class*="middle aligned"].content {
+  align-self: center;
+}
+
+.ui.items .item .image+.content {
+  min-width: 0;
+  width: auto;
+  display: block;
+  margin-left: 0;
+  padding-left: 1.5em;
+}
+
+.ui.items .item .content {
+  -webkit-box-flex: 1;
+  flex: 1 1 auto;
+  background: 0 0;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  font-size: 1em;
+  border: none;
+  border-radius: 0;
+}
+
+.ui.items .item {
+  display: flex;
+  margin: 1em 0;
+  width: 100%;
+  min-height: 0;
+  background: 0 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  transition: box-shadow .1s ease,-webkit-box-shadow .1s ease;
+}
+
+.spinner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+.modal-header {
+  background-color: @modal-header-background-color;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.modal-content {
+  width: max-content;
+}
+
+.modal-dialog {
+  width: 600px;
+  margin: 30px auto;
+  position: absolute;
+  top: 10%;
+  left: 30%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+.modal-header .title {
+  display: inline;
+}
+
+.ui.form .field:last-child {
+  margin-bottom: 1em!important;
+}
+
+.center {
+  text-align: center;
+}
+
+.mat-drawer-container {
+  background-color: @background-color-default;
+  color: @background-color-default;
+  height: available!important;
+  z-index: @unset!important;
+}
+
+.mat-drawer-content {
+  height: @unset!important;
+  overflow: @unset!important;
+  z-index: @unset!important;
+}
+
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: @dropdown-selected-value;
+}
+
+.mat-list {
+  padding-top:10px!important;
+  .mat-list-item {
+    margin-top: 20px;
+  }
+}
+
+.searchItem {
+  border: @border-main!important;
+  border-radius: 10px;
+  &:hover {
+    box-shadow: 0px 0px 30px 0px rgba(0, 000, 0, 0.67);
+  }
+  background: @background-color-default;
+  padding: 10px;
+}
+
+.header-centered {
+  text-align: center;
+}
+
+.ui.form select {
+  height: 34px;
+}
+
+.field.noWidth {
+  width: @unset!important;
+}
+
+.img-ul {
+  width: max-content!important;
+  border: none!important;
+}
+.img-ul-image {
+  //left: 85px!important;
+  //top: -100px !important;
+}
+
+.img-ul-container {
+  height: @no-padding!important;
+}
+
+#imageUploader {
+  float: right;
+  //display: none;
+  //positionion: relative;
+  //top: -35px;
+}
+.img-ul-file-upload {
+  padding: @no-padding!important;
+}
+.img-ul-drag-box-msg {
+  display: @display-none!important;
+}
+.img-ul-clear.img-ul-button {
+  display: @display-none!important;
+}
+.cabinet-avatar {
+  height: 120px;
+}
+
+.top-margin {
+  margin-top: 20px;
+}
+.left-menu {
+  padding-right: @no-padding!important;
+}
+.right-content {
+  padding-left: @no-padding!important;
+}
+
+.ui.vertical.tabular.menu {
+  border-right: unset;
+  & .active.item {
+    background-color: @menu-active-background-color;
+    border-radius: unset;
+    border-right: none;
+  }
+  & .item {
+    border-left: @border-main;
+    border-bottom: @border-main;
+    border-top: @border-main;
+    &:hover:not(.active) {
+      background: @menu-hover-background-color;
+    }
+  }
+}
+
+store-book-list {
+  .mat-select-value, .mat-form-field-type-mat-select .mat-form-field-label,
+  .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+  .mat-select-arrow  {
+    color: @store-dropdown-text-main-color;
+  }
+}
+
+.left-float {
+  float:left;
+}
+
+.right-float {
+  float: right;
+}
+
+.even-row {
+  background-color: rgba(0, 93, 128, 0.19);
+}

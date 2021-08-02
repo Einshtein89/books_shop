@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.kafkaConsumer.deployment.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "books-store.labels" . | nindent 4 }}
+    app: {{ .Values.kafkaConsumer.service.selector }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.kafkaConsumer.deployment.replicaCount }}
+  {{- end }}
+  minReadySeconds: {{ .Values.kafkaConsumer.deployment.minReadySeconds }}
+  strategy:
+    type: {{ .Values.kafkaConsumer.deployment.strategy }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.kafkaConsumer.deployment.maxUnavailable }}
+      maxSurge: {{ .Values.kafkaConsumer.deployment.maxSurge }}
+  selector:
+    matchLabels:
+      app: {{ .Values.kafkaConsumer.deployment.name }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: {{ .Values.kafkaConsumer.deployment.name }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.kafkaConsumer.deployment.name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.repository }}/{{ .Values.kafkaConsumer.deployment.image.name }}:{{ .Values.kafkaConsumer.deployment.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.kafkaConsumer.deployment.image.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.kafkaConsumer.deployment.containerPort }}
+          env:
+            - name: KAFKA_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configmap.name }}
+                  key: KAFKA_URL
+            - name: REDIS_SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configmap.name }}
+                  key: REDIS_SERVER_HOST
+            - name: REDIS_SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configmap.name }}
+                  key: REDIS_SERVER_PORT
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
