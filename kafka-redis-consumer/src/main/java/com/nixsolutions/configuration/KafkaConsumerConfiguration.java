@@ -12,9 +12,11 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 
-import com.nixsolutions.model.Message;
+import com.nixsolutions.model.avro.AvroMessageDeserializer;
+import com.nixsolutions.model.avro.SchemaRepository;
+
+import avro.Message;
 
 @Configuration
 @EnableKafka
@@ -28,15 +30,13 @@ public class KafkaConsumerConfiguration
   public ConsumerFactory<String, Message> consumerFactory()
   {
     final Map<String, Object> props = new HashMap<>();
-    final StringDeserializer stringDeserializer = new StringDeserializer();
-    final JsonDeserializer<Message> jsonDeserializer = new JsonDeserializer<>();
-    jsonDeserializer.addTrustedPackages("*");
     props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     props.put(ConsumerConfig.GROUP_ID_CONFIG, "user-orders");
-//    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "com.example.model.AvroGenericRecordDeserializer");
-//    props.put("SCHEMA", SchemaRepository.instance().getSchemaObject());
-    return new DefaultKafkaConsumerFactory<>(props, stringDeserializer, jsonDeserializer);
+    props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AvroMessageDeserializer.class);
+    props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+    props.put("SCHEMA", SchemaRepository.getSchemaObject());
+    return new DefaultKafkaConsumerFactory<>(props);
   }
 
   @Bean

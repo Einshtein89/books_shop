@@ -3,6 +3,7 @@ package com.nixsolutions.controller;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nixsolutions.model.message.MessagesPatternDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nixsolutions.model.Message;
-import com.nixsolutions.model.dto.MessagesPatternDto;
 import com.nixsolutions.service.CacheService;
 
+import avro.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,19 +30,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MessageController
 {
-
-  private static final String MESSAGES = "messages";
-
   private final CacheService cacheService;
   private final ObjectMapper objectMapper;
 
   @PostMapping(produces = APPLICATION_JSON_VALUE)
   public ResponseEntity<String> getMessages(@RequestBody final MessagesPatternDto messagesPatternDto)
-      throws JsonProcessingException
+      throws IOException
   {
     log.info("MessagesPatternDto was received with pattern: {}.", messagesPatternDto.getKeysPattern());
     final List<Message> messages = getMessagesList(messagesPatternDto.getKeysPattern());
-    return ResponseEntity.ok(new JSONObject().put(MESSAGES, messages).toString());
+    return ResponseEntity.ok(messages.toString());
   }
 
   @ExceptionHandler(Exception.class)

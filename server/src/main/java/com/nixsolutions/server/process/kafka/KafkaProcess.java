@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -16,9 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.nixsolutions.model.message.MessageDto;
+import com.nixsolutions.model.message.MessagesPatternDto;
 import com.nixsolutions.server.entity.Order;
-import com.nixsolutions.server.entity.dto.MessageDto;
-import com.nixsolutions.server.entity.dto.MessagesPatternDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,8 +49,8 @@ public class KafkaProcess
     long countOfBooks = orders.stream().mapToLong(Order::getAmount).sum();
     RestTemplate restTemplate = templateBuilder.build();
     MessageDto messageDto = new MessageDto();
-    messageDto.setUserId(userId);
-    messageDto.setOrdersCount(countOfBooks);
+    messageDto.setUserId(String.valueOf(userId));
+    messageDto.setOrdersCount((int)countOfBooks);
     log.error("Sending request to kafka producer {}", kafkaProducerUrl + producerMessagesSuffix);
     restTemplate.exchange(kafkaProducerUrl + producerMessagesSuffix, HttpMethod.POST, buildHttpEntity(messageDto),
         String.class);
@@ -72,8 +71,7 @@ public class KafkaProcess
 
   private long extractResult(String result)
   {
-    JSONObject jsonResult = new JSONObject(result);
-    JSONArray jsonArray = Optional.ofNullable(jsonResult.optJSONArray(MESSAGES)).orElse(new JSONArray());
+    JSONArray jsonArray = Optional.of(new JSONArray(result)).orElse(new JSONArray());
 
     return  IntStream.range(0, jsonArray.length())
         .mapToObj(jsonArray::optJSONObject)

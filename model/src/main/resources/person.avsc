@@ -1,0 +1,11 @@
+{
+"namespace": "avro",
+"type": "record",
+"name": "Message",
+"fields": [
+    {"name": "uuid", "type": "string"},
+    {"name": "userId", "type": "string"},
+    {"name": "ordersCount", "type": ["null", "int"]},
+    {"name": "time",  "type": ["null", "string"]}
+]
+}

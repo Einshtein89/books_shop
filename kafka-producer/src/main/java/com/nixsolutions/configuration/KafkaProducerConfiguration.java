@@ -11,9 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.nixsolutions.model.Message;
+import com.nixsolutions.model.avro.AvroMessageSerializer;
+import com.nixsolutions.model.avro.SchemaRepository;
+
+import avro.Message;
 
 @Configuration
 public class KafkaProducerConfiguration
@@ -28,7 +30,9 @@ public class KafkaProducerConfiguration
     final Map<String, Object> configProps = new HashMap<>();
     configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-    configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+    configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroMessageSerializer.class);
+    configProps.put("SCHEMA", SchemaRepository.getSchemaObject());
+
     return new DefaultKafkaProducerFactory<>(configProps);
   }
 

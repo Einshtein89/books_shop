@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nixsolutions.model.Message;
-import com.nixsolutions.model.dto.MessageDto;
+import com.nixsolutions.model.message.MessageDto;
 import com.nixsolutions.service.ProducerService;
 
+import avro.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -6,8 +6,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import com.nixsolutions.model.Message;
-
+import avro.Message;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 public final class MessageProducerListenableFutureCallback
     implements ListenableFutureCallback<SendResult<String, Message>>
 {
-
   private final Message message;
 
   @Override
@@ -26,7 +24,7 @@ public final class MessageProducerListenableFutureCallback
   }
 
   @Override
-  public void onSuccess(final SendResult<String, Message> result)
+  public void onSuccess(SendResult<String, Message> result)
   {
     log.info("Message: {} was sent successfully. With offset: {}.", message, Optional.ofNullable(result)
         .map(SendResult::getRecordMetadata)

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import com.nixsolutions.callback.MessageProducerListenableFutureCallback;
-import com.nixsolutions.model.Message;
 import com.nixsolutions.service.ProducerService;
 
+import avro.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,10 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MessageProducerService implements ProducerService<Message>
 {
-
   private static final String MESSAGE = "message";
   private static final String MESSAGES_TOPIC = "count-of-books";
-
   private final KafkaTemplate<String, Message> kafkaTemplate;
 
   @Override

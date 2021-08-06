@@ -44,30 +44,11 @@ docker build --target build-kafka-consumer -t $USERNAME/$KAFKA_CONSUMER_IMAGE:$K
 docker push $USERNAME/$KAFKA_CONSUMER_IMAGE:$KAFKA_CONSUMER_TAG && \
 docker build --target build-server -t $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG . && \
 docker push $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG && \
-docker build --target build-ui -t $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG . && \
+docker build --target ui-final -t $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG . && \
 docker push $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG && \
 
-#cd ../server || exit
-#docker build -t $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG . && \
-#docker push $USERNAME/$BACKEND_IMAGE:$BACKEND_TAG && \
-#
-##compiling and building kafka-producer, pushing to remote
-#cd ../kafka-producer || exit
-#docker build -t $USERNAME/$KAFKA_PRODUCER_IMAGE:$KAFKA_PRODUCER_TAG . && \
-#docker push $USERNAME/$KAFKA_PRODUCER_IMAGE:$KAFKA_PRODUCER_TAG && \
-#
-##compiling and building kafka-consumer, pushing to remote
-#cd ../kafka-redis-consumer || exit
-#docker build -t $USERNAME/$KAFKA_CONSUMER_IMAGE:$KAFKA_CONSUMER_TAG . && \
-#docker push $USERNAME/$KAFKA_CONSUMER_IMAGE:$KAFKA_CONSUMER_TAG && \
-#
-##compiling and building frontend, pushing to remote
-#cd ../client || exit
-#docker build -t $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG . && \
-#docker push $USERNAME/$FRONTEND_IMAGE:$FRONTEND_TAG && \
-
 #preparing k8s cluster
-cd ../k8s || exit
+cd k8s || exit
 if [[ -f tls.cert ]]
 then
     rm tls.cert
@@ -88,7 +69,7 @@ if [[ ! $(kubectl get secret -n $PROJECT_NAME | grep tls-secret) ]]
 then
     openssl genrsa -out tls.key 2048 && \
     openssl req -new -x509 -key tls.key -out tls.cert -days 360 -subj /CN=books.com && \
-    kubectl create secret -n books-store tls tls-secret --cert=tls.cert --key=tls.key
+    kubectl create secret -n $PROJECT_NAME tls tls-secret --cert=tls.cert --key=tls.key
 fi
 
 helm dependency update $PROJECT_NAME && \
