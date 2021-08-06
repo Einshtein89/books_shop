@@ -25,5 +25,4 @@ using wide list of technologies and frameworks.
 - Docker is used as an images' builder, that will be deployed to k8s
 - K8s is used for automating deployment, scaling, and management of containerized applications.
 - Helm is a package manager and templating engine to work with k8s manifests
-- Redis, Kafka and MongoDB and Mongo-Express (UI for mongodb) are built and deployed using helm charts from public
-- repos
+- Redis, Kafka and MongoDB and Mongo-Express (UI for mongodb) are built and deployed using helm charts from public repos
