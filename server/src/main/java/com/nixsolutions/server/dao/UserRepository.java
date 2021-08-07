@@ -15,12 +15,12 @@ import com.nixsolutions.server.entity.users.User;
 public interface UserRepository extends MongoRepository<User, Long>
 {
   List<User> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
-  List<User> findByFirstNameContainsOrLastNameContains(@Param("firstName") String firstName, @Param("lastName") String lastName);
+  List<User> findByFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(@Param("firstName") String firstName, @Param("lastName") String lastName);
   User findByEmail(@Param("email") String email);
   
   @Override
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  void delete(Long aLong);
+  void deleteById(Long aLong);
   
   @Override
   @PreAuthorize("hasRole('ROLE_ADMIN')")

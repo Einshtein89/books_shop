@@ -1,6 +1,7 @@
 package com.nixsolutions.server.validators;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -26,7 +27,8 @@ public class BeforeUpdateUserValidator implements Validator
     {
       errors.rejectValue("id", "user.doesn't.exists.error");
     }
-    if (!repository.exists(newUser.getId()))
+    Example<User> example = Example.of(newUser);
+    if (!repository.exists(example))
     {
       errors.rejectValue("id", "user.doesn't.exists.error");
     }

@@ -4,6 +4,7 @@ import static com.nixsolutions.server.configs.Constants.PASSWORD_MAX_LENGTH;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -38,13 +39,13 @@ public class DefaultUserRepositoryImpl implements UserRepository
   {
     return userRepository.findByFirstNameAndLastName(firstName, lastName);
   }
-  
+
   @Override
-  public List<User> findByFirstNameContainsOrLastNameContains(String firstName, String lastName)
+  public List<User> findByFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(String firstName, String lastName)
   {
-    return userRepository.findByFirstNameContainsOrLastNameContains(firstName, lastName);
+    return userRepository.findByFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(firstName, lastName);
   }
-  
+
   @Override
   public User findByEmail(String email)
   {
@@ -67,35 +68,35 @@ public class DefaultUserRepositoryImpl implements UserRepository
     }
     return userRepository.save(s);
   }
-  
+
   @Override
-  public <S extends User> List<S> save(Iterable<S> iterable)
+  public <S extends User> List<S> saveAll(Iterable<S> iterable)
   {
-    return userRepository.save(iterable);
+    return userRepository.saveAll(iterable);
   }
-  
+
   @Override
-  public User findOne(Long aLong)
+  public Optional<User> findById(Long aLong)
   {
-    return userRepository.findOne(aLong);
+    return userRepository.findById(aLong);
   }
-  
+
   @Override
-  public boolean exists(Long aLong)
+  public boolean existsById(Long aLong)
   {
-    return userRepository.exists(aLong);
+    return userRepository.existsById(aLong);
   }
-  
+
   @Override
   public List<User> findAll()
   {
     return userRepository.findAll();
   }
-  
+
   @Override
-  public Iterable<User> findAll(Iterable<Long> iterable)
+  public Iterable<User> findAllById(Iterable<Long> iterable)
   {
-    return userRepository.findAll(iterable);
+    return userRepository.findAllById(iterable);
   }
   
   @Override
@@ -105,9 +106,9 @@ public class DefaultUserRepositoryImpl implements UserRepository
   }
   
   @Override
-  public void delete(Long aLong)
+  public void deleteById(Long aLong)
   {
-    userRepository.delete(aLong);
+    userRepository.deleteById(aLong);
   }
   
   @Override
@@ -115,11 +116,17 @@ public class DefaultUserRepositoryImpl implements UserRepository
   {
     userRepository.delete(user);
   }
-  
+
   @Override
-  public void delete(Iterable<? extends User> iterable)
+  public void deleteAllById(Iterable<? extends Long> iterable)
   {
-    userRepository.delete(iterable);
+    userRepository.deleteAllById(iterable);
+  }
+
+  @Override
+  public void deleteAll(Iterable<? extends User> iterable)
+  {
+    userRepository.deleteAll(iterable);
   }
   
   @Override
@@ -147,7 +154,7 @@ public class DefaultUserRepositoryImpl implements UserRepository
   }
 
   @Override
-  public <S extends User> S findOne(Example<S> example)
+  public <S extends User> Optional<S> findOne(Example<S> example)
   {
     return userRepository.findOne(example);
   }

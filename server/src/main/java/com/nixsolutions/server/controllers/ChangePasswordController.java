@@ -34,7 +34,8 @@ public class ChangePasswordController
     {
       return new ResponseEntity<>("user.doesn't.exists.error", new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
-    User currentUser = userRepository.findOne(userId);
+    User currentUser = userRepository.findById(userId).orElseThrow(
+        () -> new RuntimeException("cannot find user with id: " + userId));
     if (!bCryptPasswordEncoder.matches(passwordChange.getOldPassword(), currentUser.getPassword()))
     {
       return new ResponseEntity<>("old.password.doesn't.match.error", new HttpHeaders(), HttpStatus.BAD_REQUEST);

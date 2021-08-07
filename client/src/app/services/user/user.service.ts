@@ -86,7 +86,7 @@ export class UserService {
       `firstName=${value}`,
       `lastName=${value}`
     ].join('&');
-    let queryUrl: string = `${this.userUrl}/search/findByFirstNameContainsOrLastNameContains?${params}`;
+    let queryUrl: string = `${this.userUrl}/search/findByFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase?${params}`;
     return this.http.get(queryUrl)
       .catch(this._handleError)
   }

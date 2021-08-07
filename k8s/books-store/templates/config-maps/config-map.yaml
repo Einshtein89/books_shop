@@ -11,5 +11,5 @@ data:
   KAFKA_URL: "{{ .Release.Name }}-{{ .Values.kafka.service.name }}:{{ .Values.kafka.service.port }}"
   REDIS_SERVER_HOST: "{{ .Release.Name }}-{{ .Values.redis.service.name }}"
   REDIS_SERVER_PORT: "{{ .Values.redis.service.port }}"
-  KAFKA_PRODUCER_URL: "{{ .Values.kafkaProducer.service.name }}:{{ .Values.kafkaProducer.service.port }}"
-  KAFKA_CONSUMER_URL: "{{ .Values.kafkaConsumer.service.name }}:{{ .Values.kafkaConsumer.service.port }}"
+  KAFKA_PRODUCER_URL: "http://{{ .Values.kafkaProducer.service.name }}:{{ .Values.kafkaProducer.service.port }}"
+  KAFKA_CONSUMER_URL: "http://{{ .Values.kafkaConsumer.service.name }}:{{ .Values.kafkaConsumer.service.port }}"

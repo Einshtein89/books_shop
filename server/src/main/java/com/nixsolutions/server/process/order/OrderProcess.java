@@ -67,7 +67,7 @@ public class OrderProcess
         .collect(toList());
     if (!CollectionUtils.isEmpty(orders))
     {
-      orderRepository.save(orders);
+      orderRepository.saveAll(orders);
       kafkaProcess.sendMessage(orders);
       return ok(uniqueId);
     }
@@ -77,9 +77,9 @@ public class OrderProcess
   private OrderExtension toOrderExtension(Order order)
   {
     OrderExtension orderExtension = new OrderExtension(order);
-    Book book = Optional.ofNullable(bookRepository.findOne(order.getBookId()))
-        .orElseThrow(() -> new RuntimeException("cannot find book with id: " + order.getBookId()));
-    orderExtension.setBook(book);
+    Optional<Book> book = bookRepository.findById(order.getBookId());
+    orderExtension.setBook(book.orElseThrow(
+        () -> new RuntimeException("cannot find book with id: " + order.getBookId())));
     return orderExtension;
   }
   
