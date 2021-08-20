@@ -1,11 +1,11 @@
 package com.nixsolutions.server.entity;
 
-public class OrderExtension extends Order
+public class OrderPositionExtension extends OrderPosition
 {
   
-  public OrderExtension(Order order)
+  public OrderPositionExtension(OrderPosition orderPosition)
   {
-    super(order);
+    super(orderPosition);
   }
   
   private Book book;

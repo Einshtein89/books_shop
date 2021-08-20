@@ -6,6 +6,7 @@
     {"name": "uuid", "type": "string"},
     {"name": "userId", "type": "string"},
     {"name": "ordersCount", "type": ["null", "int"]},
+    {"name": "orderId", "type": ["null", "string"]},
     {"name": "time",  "type": ["null", "string"]}
 ]
 }

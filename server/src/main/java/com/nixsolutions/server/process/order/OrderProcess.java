@@ -24,8 +24,8 @@ import com.nixsolutions.server.dao.BookRepository;
 import com.nixsolutions.server.dao.OrderRepository;
 import com.nixsolutions.server.dao.UserRepository;
 import com.nixsolutions.server.entity.Book;
-import com.nixsolutions.server.entity.Order;
-import com.nixsolutions.server.entity.OrderExtension;
+import com.nixsolutions.server.entity.OrderPosition;
+import com.nixsolutions.server.entity.OrderPositionExtension;
 import com.nixsolutions.server.process.kafka.KafkaProcess;
 
 import lombok.RequiredArgsConstructor;
@@ -43,15 +43,15 @@ public class OrderProcess
 
   public String getOrders(Long userId)
   {
-    List<Order> ordersByUser = orderRepository.getAllByUserIdOrderById(userId);
-    Map<LocalDate, Map<Long, List<OrderExtension>>> processedOrders = ordersByUser.stream()
+    List<OrderPosition> ordersByUser = orderRepository.getAllByUserIdOrderById(userId);
+    Map<LocalDate, Map<Long, List<OrderPositionExtension>>> processedOrders = ordersByUser.stream()
         .map(this::toOrderExtension)
-        .collect(groupingBy(Order::getDate, groupingBy(Order::getUniqueId)));
+        .collect(groupingBy(OrderPosition::getDate, groupingBy(OrderPosition::getUniqueId)));
     JSONObject response = new JSONObject();
     response.put(ORDERS, processedOrders);
     if (!CollectionUtils.isEmpty(processedOrders))
     {
-      long booksCount = kafkaProcess.getBooksCount(userId);
+      Map<String, Integer> booksCount = kafkaProcess.getBooksCountByOrderId(userId);
       response.put(BOOKS_COUNT, booksCount);
       return response.toString();
     }
@@ -62,24 +62,24 @@ public class OrderProcess
   {
     HashMap<Book, Long> preparedMap = preProcess(orderMap);
     long uniqueId = Calendar.getInstance().getTimeInMillis();
-    List<Order> orders = preparedMap.entrySet().stream()
+    List<OrderPosition> orderPositions = preparedMap.entrySet().stream()
         .map(toOrder(uniqueId))
         .collect(toList());
-    if (!CollectionUtils.isEmpty(orders))
+    if (!CollectionUtils.isEmpty(orderPositions))
     {
-      orderRepository.saveAll(orders);
-      kafkaProcess.sendMessage(orders);
+      orderRepository.saveAll(orderPositions);
+      kafkaProcess.sendMessage(orderPositions);
       return ok(uniqueId);
     }
     return ResponseEntity.badRequest().build();
   }
   
-  private OrderExtension toOrderExtension(Order order)
+  private OrderPositionExtension toOrderExtension(OrderPosition orderPosition)
   {
-    OrderExtension orderExtension = new OrderExtension(order);
-    Optional<Book> book = bookRepository.findById(order.getBookId());
+    OrderPositionExtension orderExtension = new OrderPositionExtension(orderPosition);
+    Optional<Book> book = bookRepository.findById(orderPosition.getBookId());
     orderExtension.setBook(book.orElseThrow(
-        () -> new RuntimeException("cannot find book with id: " + order.getBookId())));
+        () -> new RuntimeException("cannot find book with id: " + orderPosition.getBookId())));
     return orderExtension;
   }
   
@@ -95,19 +95,19 @@ public class OrderProcess
     return Long.parseLong(key.substring(0 , key.indexOf("_")));
   }
   
-  private Function<Map.Entry<Book, Long>, Order> toOrder(long uniqueId)
+  private Function<Map.Entry<Book, Long>, OrderPosition> toOrder(long uniqueId)
   {
     return entry -> {
-      Order order = new Order();
-      order.setBookId(entry.getKey().getId());
-      order.setAmount(entry.getValue());
+      OrderPosition orderPosition = new OrderPosition();
+      orderPosition.setBookId(entry.getKey().getId());
+      orderPosition.setAmount(entry.getValue());
       User principal = (User)
           SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       com.nixsolutions.server.entity.users.User currentUser = userRepository.findByEmail(principal.getUsername());
-      order.setUserId(currentUser.getId());
-      order.setDate(LocalDate.now());
-      order.setUniqueId(uniqueId);
-      return order;
+      orderPosition.setUserId(currentUser.getId());
+      orderPosition.setDate(LocalDate.now());
+      orderPosition.setUniqueId(uniqueId);
+      return orderPosition;
     };
   }
 }

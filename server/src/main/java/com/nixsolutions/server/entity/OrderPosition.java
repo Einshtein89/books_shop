@@ -16,8 +16,8 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-@Document(collection = "orders")
-public class Order implements Serializable
+@Document(collection = "orderPositions")
+public class OrderPosition implements Serializable
 {
   @Transient
   public static final String SEQUENCE_NAME = "orders_sequence";
@@ -32,13 +32,13 @@ public class Order implements Serializable
   private LocalDate date;
   private long uniqueId;
 
-  public Order(Order order)
+  public OrderPosition(OrderPosition orderPosition)
   {
-    this.id = order.id;
-    this.uniqueId = order.uniqueId;
-    this.bookId = order.bookId;
-    this.userId = order.userId;
-    this.amount = order.amount;
-    this.date = order.date;
+    this.id = orderPosition.id;
+    this.uniqueId = orderPosition.uniqueId;
+    this.bookId = orderPosition.bookId;
+    this.userId = orderPosition.userId;
+    this.amount = orderPosition.amount;
+    this.date = orderPosition.date;
   }
 }

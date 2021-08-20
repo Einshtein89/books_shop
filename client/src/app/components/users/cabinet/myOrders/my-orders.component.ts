@@ -5,7 +5,7 @@ import {AuthService} from "../../../../services/auth/auth.service";
 import {TokenStorage} from "../../../../services/auth/token.storage";
 import {TranslateService} from "@ngx-translate/core";
 import {UserService} from "../../../../services/user/user.service";
-import {Order} from "../../../../models/order.model";
+import {OrderPosition} from "../../../../models/order.model";
 import {LoadingUtils} from "../../../../utils/loading/loading.utils";
 import {MenuUtils} from "../../../../utils/menu/menu.utils";
 import {ImageService} from "../../../../services/image.service";
@@ -17,12 +17,12 @@ import {ImageService} from "../../../../services/image.service";
 })
 export class MyOrdersComponent implements OnInit, AfterContentChecked {
   private user: User;
-  private orders: Map<string, Map<number, Array<Order>>> = new Map<string, Map<number, Array<Order>>>();
+  private orders: Map<string, Map<number, Array<OrderPosition>>> = new Map<string, Map<number, Array<OrderPosition>>>();
   private ordersUpdated: boolean = true;
   loading: boolean;
-  private ordersValues: Array<Map<number, Array<Order>>>;
+  private ordersValues: Array<Map<number, Array<OrderPosition>>>;
   private ordersKeys: Array<string>;
-  private booksCount: number;
+  private booksCount: Map<string, number>;
 
   constructor(private orderService: OrderService,
               private authService: AuthService,
@@ -49,8 +49,7 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
     if (this.user && this.ordersUpdated) {
       this.getOrders();
     }
-    if (this.orders)
-    {
+    if (this.orders) {
       this.createKeysAndValuesForTemplate();
       this.loading = false;
     }
@@ -62,13 +61,12 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
     this.orderService.getOrder(this.user.id)
       .subscribe((orders) => {
         if (!orders) {
-          this.orders = new Map<string, Map<number, Array<Order>>>();
+          this.orders = new Map<string, Map<number, Array<OrderPosition>>>();
           this.loading = false;
           LoadingUtils.unblockUI();
           return;
         }
         this.orders = this.convertOrdersToMapByDateAndUniqueId(orders);
-        this.booksCount = orders.books_count;
         this.ordersUpdated = false;
         this.orderService.ordersUpdated.next(false);
         this.orderService.userOrders.next(this.orders);
@@ -79,22 +77,29 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
   }
 
 
-
-  private convertOrdersToMapByDateAndUniqueId(orders): Map<string, Map<number, Array<Order>>> {
+  private convertOrdersToMapByDateAndUniqueId(orders): Map<string, Map<number, Array<OrderPosition>>> {
     let ordersByDate = orders['orders'];
-    let ordersMapByDate = new Map<string, Map<number, Array<Order>>>();
+    let booksCountByOrder = orders['books_count'];
+    let currentTotalBookCount;
+    let ordersMapByDate = new Map<string, Map<number, Array<OrderPosition>>>();
 
     for (let orderByDate in ordersByDate) {
-      let ordersMapByUniqueId = new Map<number, Array<Order>>();
-      if (ordersByDate.hasOwnProperty(orderByDate))
-      {
+      let ordersMapByUniqueId = new Map<number, Array<OrderPosition>>();
+      if (ordersByDate.hasOwnProperty(orderByDate)) {
         let ordersByUniqueId = ordersByDate[orderByDate];
         for (let orderByUniqueId in ordersByUniqueId) {
-          if (ordersByUniqueId.hasOwnProperty(orderByUniqueId)){
-            let processedOrders = this.createOrdersList(ordersByUniqueId[orderByUniqueId]);
-            this.addTotalAmountToOrders(processedOrders);
-            ordersMapByUniqueId.set(Number.parseInt(orderByUniqueId),
-              processedOrders)
+          for (let bookCount in booksCountByOrder) {
+            if (booksCountByOrder.hasOwnProperty(bookCount)) {
+              if (orderByUniqueId === bookCount) {
+                currentTotalBookCount = booksCountByOrder[bookCount];
+              }
+            }
+            if (ordersByUniqueId.hasOwnProperty(orderByUniqueId)) {
+              let processedOrders = this.createOrdersList(ordersByUniqueId[orderByUniqueId], currentTotalBookCount);
+              this.addTotalAmountToOrders(processedOrders);
+              ordersMapByUniqueId.set(Number.parseInt(orderByUniqueId),
+                processedOrders)
+            }
           }
         }
         ordersMapByDate.set(orderByDate, ordersMapByUniqueId);
@@ -103,20 +108,21 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
     return this.sortMapByKeys(ordersMapByDate);
   }
 
-  private createOrdersList(ordersByDate: any) : Array<Order> {
-    return ordersByDate.map(order => this.toOrder(order))
+  private createOrdersList(ordersByDate: any, currentTotalBookCount: number): Array<OrderPosition> {
+    return ordersByDate.map(order => this.toOrderPosition(order, currentTotalBookCount))
   }
 
-  private toOrder(order: any) {
-    return new Order(order);
+  private toOrderPosition(order: any, currentTotalBookCount: number) {
+    order.totalBookCount = currentTotalBookCount;
+    return new OrderPosition(order);
   }
 
-  private addTotalAmountToOrders(processedOrders: Order[]) {
+  private addTotalAmountToOrders(processedOrders: OrderPosition[]) {
     let totalAmount = processedOrders.reduce((acc, order) => acc + order.amount * order.book.price, 0);
     processedOrders.forEach(order => order.totalAmount = totalAmount);
   }
 
-  private sortMapByKeys(unsortedMap: Map<string, Map<number, Array<Order>>>): Map<any, Map<number, Array<Order>>>{
+  private sortMapByKeys(unsortedMap: Map<string, Map<number, Array<OrderPosition>>>): Map<any, Map<number, Array<OrderPosition>>> {
     return new Map(
       Array.from(unsortedMap).sort((a, b) => Date.parse(b[0]) - Date.parse(a[0]))
     );
@@ -127,7 +133,7 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
     this.ordersValues = Array.from(this.orders.values());
   }
 
-  private getOrderByDateValues(ordersByDate: Map<number, Array<Order>>) {
+  private getOrderByDateValues(ordersByDate: Map<number, Array<OrderPosition>>) {
     return Array.from(ordersByDate.values());
   }
 
@@ -135,15 +141,13 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
     this.menuUtils.makeMenuItemActive();
   }
 
-  showUniqueId(orderArray: Array<Order>, i: number) {
-    if (orderArray.length == 1)
-    {
+  showUniqueId(orderArray: Array<OrderPosition>, i: number) {
+    if (orderArray.length == 1) {
       return true;
     }
     if (i < 1) {
       return true;
-    }
-    else if (orderArray[i].uniqueId == orderArray[i -1].uniqueId) {
+    } else if (orderArray[i].uniqueId == orderArray[i - 1].uniqueId) {
       return false;
     }
     return true;

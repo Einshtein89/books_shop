@@ -9,12 +9,7 @@
     <div *ngFor="let date of ordersKeys" class="table-holder">
       <table class="content-holder">
         <tr class="order-date">
-          <td colspan="2">
             <b>{{ date | localizedDate }}</b>
-          </td>
-          <td colspan="2">
-            <b>{{'my.orders.books.count' | translate}}: {{booksCount}}</b>
-          </td>
         </tr>
         <tr>
           <td class="orderId">{{'my.orders.order.id.header' | translate}}</td>
@@ -28,49 +23,52 @@
         </tr>
         <ng-container *ngFor="let ordersByDate of ordersValues;">
           <ng-container *ngFor="let orderArray of getOrderByDateValues(ordersByDate);">
-            <ng-container *ngFor="let order of orderArray; let i = index; even as isEven">
+            <ng-container *ngFor="let orderPosition of orderArray; let i = index; even as isEven">
               <tr [ngClass]="{'even-row': !isEven, 'odd-row': isEven}">
-                <ng-container *ngIf="date == order.date">
+                <ng-container *ngIf="date == orderPosition.date">
                   <td [attr.rowspan]="orderArray.length" *ngIf="showUniqueId(orderArray, i);">
-                    {{ order.uniqueId }}
+                    {{ orderPosition.uniqueId }}
                   </td>
                   <td>
                     {{ i + 1 }}
                   </td>
                   <td>
                     <div class="blurring dimmable image">
-                      <img width="50px" height="50px" [src]="imageService.getImgSrc(order.book)">
+                      <img width="50px" height="50px" [src]="imageService.getImgSrc(orderPosition.book)">
                     </div>
                   </td>
                   <td>
                     <div>
-                      <a *ngIf="order.book.catalog">{{ order.book.catalog.name }}</a>
+                      <a *ngIf="orderPosition.book.catalog">{{ orderPosition.book.catalog.name }}</a>
                     </div>
                   </td>
                   <td>
                     <div>
-                      {{ order.book.author }}
+                      {{ orderPosition.book.author }}
                     </div>
                   </td>
                   <td>
                     <div>
-                      {{ order.book.title }}
+                      {{ orderPosition.book.title }}
                     </div>
                   </td>
                   <td>
                     <div>
-                      {{ order.book.price | localizedCurrency  }}
+                      {{ orderPosition.book.price | localizedCurrency  }}
                     </div>
                   </td>
                   <td>
                     <div>
-                      {{ order.amount }}
+                      {{ orderPosition.amount }}
                     </div>
                   </td>
                 </ng-container>
               </tr>
-              <ng-container *ngIf="i == orderArray.length - 1 && date == order.date">
+              <ng-container *ngIf="i == orderArray.length - 1 && date == orderPosition.date">
                 <tr class="total-amount-holder">
+                  <td colspan="2" class="total-amount">
+                    <b>{{'my.orders.books.count' | translate}}: {{orderArray[i].totalBookCount}}</b>
+                  </td>
                   <td colspan="8" class="total-amount">
                     {{ 'my.orders.total.amount' | translate  }}: {{ orderArray[i].totalAmount | localizedCurrency }}
                   </td>

@@ -1,11 +1,16 @@
 package com.nixsolutions.server.process.kafka;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -17,7 +22,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.nixsolutions.model.message.MessageDto;
 import com.nixsolutions.model.message.MessagesPatternDto;
-import com.nixsolutions.server.entity.Order;
+import com.nixsolutions.server.entity.OrderPosition;
+import com.nixsolutions.server.entity.OrderMessage;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,20 +49,24 @@ public class KafkaProcess
 
   private final RestTemplateBuilder templateBuilder;
 
-  public void sendMessage(List<Order> orders)
+  public void sendMessage(List<OrderPosition> orderPositions)
   {
-    long userId = orders.stream().findFirst().orElse(new Order()).getUserId();
-    long countOfBooks = orders.stream().mapToLong(Order::getAmount).sum();
+    long userId = orderPositions.stream().findFirst().orElse(new OrderPosition()).getUserId();
+//    long countOfBooks = orderPositions.stream().mapToLong(Order::getAmount).sum();
     RestTemplate restTemplate = templateBuilder.build();
-    MessageDto messageDto = new MessageDto();
-    messageDto.setUserId(String.valueOf(userId));
-    messageDto.setOrdersCount((int)countOfBooks);
-    log.error("Sending request to kafka producer {}", kafkaProducerUrl + producerMessagesSuffix);
-    restTemplate.exchange(kafkaProducerUrl + producerMessagesSuffix, HttpMethod.POST, buildHttpEntity(messageDto),
-        String.class);
+
+    orderPositions.forEach(order -> {
+      MessageDto messageDto = new MessageDto();
+      messageDto.setUserId(String.valueOf(userId));
+      messageDto.setOrdersCount((int)order.getAmount());
+      messageDto.setOrderId(String.valueOf(order.getUniqueId()));
+      log.error("Sending request to kafka producer {}", kafkaProducerUrl + producerMessagesSuffix);
+      restTemplate.exchange(kafkaProducerUrl + producerMessagesSuffix, HttpMethod.POST, buildHttpEntity(messageDto),
+          String.class);
+    });
   }
 
-  public long getBooksCount(Long userId)
+  public Map<String, Integer> getBooksCountByOrderId(Long userId)
   {
     RestTemplate restTemplate = templateBuilder.build();
     MessagesPatternDto messagesPatternDto = new MessagesPatternDto();
@@ -69,14 +79,14 @@ public class KafkaProcess
     return extractResult(result);
   }
 
-  private long extractResult(String result)
+  private Map<String, Integer> extractResult(String result)
   {
     JSONArray jsonArray = Optional.of(new JSONArray(result)).orElse(new JSONArray());
 
-    return  IntStream.range(0, jsonArray.length())
+    return IntStream.range(0, jsonArray.length())
         .mapToObj(jsonArray::optJSONObject)
-        .mapToLong(jsonObject -> jsonObject.optLong("ordersCount"))
-        .sum();
+        .map(this::toOrderMessage)
+        .collect(groupingBy(OrderMessage::getOrderId, summingInt(OrderMessage::getOrdersCount)));
   }
 
   private HttpEntity<?> buildHttpEntity(Object body)
@@ -85,5 +95,14 @@ public class KafkaProcess
     httpHeaders.setContentType(MediaType.APPLICATION_JSON);
     httpHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
     return new HttpEntity<>(body, httpHeaders);
+  }
+
+  private OrderMessage toOrderMessage(JSONObject orderMessageAsJson)
+  {
+    OrderMessage orderMessage = new OrderMessage();
+    orderMessage.setOrderId(orderMessageAsJson.optString("orderId"));
+    orderMessage.setOrdersCount((int)orderMessageAsJson.optLong("ordersCount"));
+
+    return orderMessage;
   }
 }

@@ -1,6 +1,6 @@
 import {Book} from "./book.model";
 
-export class Order {
+export class OrderPosition {
   public amount: number;
   public book: Book;
   public bookId: number;
@@ -9,6 +9,7 @@ export class Order {
   public uniqueId: number;
   public userId: number;
   public totalAmount: number;
+  public totalBookCount: number;
 
   constructor(order: any) {
     Object.keys(order).forEach((key) => this[key] = order[key]);
