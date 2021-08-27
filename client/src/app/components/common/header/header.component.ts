@@ -16,6 +16,7 @@ import {ComponentFactory} from "../../../component-factory/component-factory";
 import {AddToCartPopupComponent} from "../../store/cart/add-to-cart/add-to-cart-popup.component";
 import {Book} from "../../../models/book.model";
 import {Catalog} from "../../../models/catalog.model";
+import {UserService} from "../../../services/user/user.service";
 declare var $ : any;
 
 @Component({
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
 
 
   constructor(public authService: AuthService,
+              public userService: UserService,
               private router: Router,
               private tokenStorage: TokenStorage,
               public translate: TranslateService,
@@ -71,6 +73,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
 
   private logout() {
     this.tokenStorage.signOut();
+    this.userService.logOutUser();
     this.router.navigate(['.']);
   }
 

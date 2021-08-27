@@ -35,6 +35,10 @@ export class UserService {
               ) {
   }
 
+  logOutUser() {
+    this.loggedInUser.complete();
+  }
+
   getAllUsers(url?: string): Observable<any> {
     let params: string = [
       `size=${this.defaultPageSize}`

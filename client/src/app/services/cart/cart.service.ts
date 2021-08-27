@@ -23,6 +23,10 @@ export class CartService {
     this.cartContent.next(cart);
   }
 
+  public clearCart() {
+    this.booksInCart.next(new Map<Book, number>());
+  }
+
   public addBookToCart(book: Book) {
     let booksMap = this.booksInCart.getValue();
     if (!booksMap.has(book)) {

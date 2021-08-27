@@ -60,6 +60,7 @@ export class CartConfirmationComponent implements OnInit {
     this.loadingUtils.blockUI();
     this.orderService.placeOrder(booksMap).subscribe(
       (orderUniqueId) => {
+        this.cartService.clearCart()
         LoadingUtils.unblockUI();
         this.errorList = [];
         this.router.navigate(['cart/successfull'], { queryParams: { orderId: orderUniqueId } });

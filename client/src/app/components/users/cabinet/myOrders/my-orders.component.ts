@@ -22,7 +22,6 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
   loading: boolean;
   private ordersValues: Array<Map<number, Array<OrderPosition>>>;
   private ordersKeys: Array<string>;
-  private booksCount: Map<string, number>;
 
   constructor(private orderService: OrderService,
               private authService: AuthService,
@@ -80,29 +79,35 @@ export class MyOrdersComponent implements OnInit, AfterContentChecked {
   private convertOrdersToMapByDateAndUniqueId(orders): Map<string, Map<number, Array<OrderPosition>>> {
     let ordersByDate = orders['orders'];
     let booksCountByOrder = orders['books_count'];
-    let currentTotalBookCount;
+    let currentTotalBookCount = 0;
     let ordersMapByDate = new Map<string, Map<number, Array<OrderPosition>>>();
 
-    for (let orderByDate in ordersByDate) {
+    for (let date in ordersByDate) {
       let ordersMapByUniqueId = new Map<number, Array<OrderPosition>>();
-      if (ordersByDate.hasOwnProperty(orderByDate)) {
-        let ordersByUniqueId = ordersByDate[orderByDate];
-        for (let orderByUniqueId in ordersByUniqueId) {
+      if (ordersByDate.hasOwnProperty(date)) {
+        let ordersByUniqueId = ordersByDate[date];
+        let keys = Object.keys(ordersByUniqueId);
+        //we need to display orders ordered by uniqueId, but iteration order is not guarantied
+        // by for(let object in object) cycle, so need to sort keys first and use fori type of iteration
+        keys.sort();
+        keys.reverse();
+        for (let i = 0; i < keys.length; i++) {
+          let uniqueId = keys[i];
           for (let bookCount in booksCountByOrder) {
             if (booksCountByOrder.hasOwnProperty(bookCount)) {
-              if (orderByUniqueId === bookCount) {
+              if (uniqueId === bookCount) {
                 currentTotalBookCount = booksCountByOrder[bookCount];
               }
             }
-            if (ordersByUniqueId.hasOwnProperty(orderByUniqueId)) {
-              let processedOrders = this.createOrdersList(ordersByUniqueId[orderByUniqueId], currentTotalBookCount);
-              this.addTotalAmountToOrders(processedOrders);
-              ordersMapByUniqueId.set(Number.parseInt(orderByUniqueId),
-                processedOrders)
-            }
+          }
+          if (ordersByUniqueId.hasOwnProperty(uniqueId)) {
+            let ordersByUniqueIdElement = ordersByUniqueId[uniqueId];
+            let processedOrders = this.createOrdersList(ordersByUniqueIdElement, currentTotalBookCount);
+            this.addTotalAmountToOrders(processedOrders);
+            ordersMapByUniqueId.set(Number.parseInt(uniqueId), processedOrders)
           }
         }
-        ordersMapByDate.set(orderByDate, ordersMapByUniqueId);
+        ordersMapByDate.set(date, ordersMapByUniqueId);
       }
     }
     return this.sortMapByKeys(ordersMapByDate);
