@@ -26,7 +26,7 @@ frontend:
     maxSurge: 1
     image:
       name: books_frontend_mongo
-      tag: 1
+#      tag: 1
       imagePullPolicy: Always
     containerPort: 80
 
@@ -49,7 +49,7 @@ backend:
     maxSurge: 1
     image:
       name: books_backend_mongo
-      tag: 1
+#      tag: 1
       imagePullPolicy: Always
     containerPort: 3000
 
@@ -71,7 +71,7 @@ kafkaProducer:
     maxSurge: 1
     image:
       name: books_kafka_producer
-      tag: 1
+#      tag: 1
       imagePullPolicy: Always
     containerPort: 8081
 
@@ -93,7 +93,7 @@ kafkaConsumer:
     maxSurge: 1
     image:
       name: books_kafka_consumer
-      tag: 1
+#      tag: 1
       imagePullPolicy: Always
     containerPort: 8082
 

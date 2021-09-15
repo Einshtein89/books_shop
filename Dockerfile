@@ -5,25 +5,25 @@ COPY . $APP_HOME
 WORKDIR $APP_HOME
 RUN mvn clean package -Dmaven.test.skip=true
 
-FROM openjdk:8-jdk-alpine as build-kafka-producer
+FROM openjdk:8-jdk-alpine as maven
 VOLUME /tmp
 ENV APP_HOME=/usr/src/app
+WORKDIR $APP_HOME
+
+FROM maven as build-kafka-producer
 COPY --from=build-java $APP_HOME/kafka-producer/target/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]
 
-FROM openjdk:8-jdk-alpine as build-kafka-consumer
-VOLUME /tmp
-ENV APP_HOME=/usr/src/app
+FROM maven as build-kafka-consumer
 COPY --from=build-java $APP_HOME/kafka-redis-consumer/target/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]
 
-FROM openjdk:8-jdk-alpine as build-server
-VOLUME /tmp
-ENV APP_HOME=/usr/src/app
+FROM maven as build-server
 COPY --from=build-java $APP_HOME/server/target/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]
 
 FROM node:10.8.0 as build-ui
+VOLUME /tmp
 ENV APP_HOME=/usr/src/app
 RUN mkdir -p $APP_HOME
 COPY client $APP_HOME
