@@ -26,7 +26,7 @@ frontend:
     maxSurge: 1
     image:
       name: books_frontend_mongo
-      tag: 2
+      tag: 1
       imagePullPolicy: Always
     containerPort: 80
 
@@ -49,7 +49,7 @@ backend:
     maxSurge: 1
     image:
       name: books_backend_mongo
-      tag: 2
+      tag: 1
       imagePullPolicy: Always
     containerPort: 3000
 
