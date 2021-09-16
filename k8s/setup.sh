@@ -1,8 +1,29 @@
 #!/bin/bash
 
-#brew install kubectl
-#brew install helm
+#pre installation of all required programs (Mac OS only)
+#if [[ ! $(docker version --format "{{.Server.KernelVersion}}") == *-moby ]]
+#then
+#    brew cask install docker
+#fi
 
+if [[ ! $(kubectl version --client) ]]
+then
+  brew install kubectl
+fi
+if [[ ! $(helm version) ]]
+then
+  brew install helm
+fi
+if [[ ! $(minikube version) ]]
+then
+#  brew install minikube
+# as of writing this script, latest version of minikube wasn't working well with nginx-ingress addon,
+# so installing v 1.19.0
+  brew install hyperkit
+  curl -LO https://github.com/kubernetes/minikube/releases/download/v1.19.0/minikube-darwin-amd64
+  sudo install minikube-darwin-amd64 /usr/local/bin/minikube
+  brew link hyperkit
+fi
 #docker hub credentials and repo details
 USERNAME=$1
 PASSWORD=$2
@@ -92,3 +113,8 @@ if [[ -f tls.key ]]
 then
     rm tls.key
 fi
+
+minikube start --driver=hyperkit && \
+#if next command is not working and ingress addons are not enabled - see https://github.com/kubernetes/minikube/issues/8756
+minikube addons enable ingress && \
+minikube dashboard
