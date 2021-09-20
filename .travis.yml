@@ -6,8 +6,3 @@ before_install:
   - docker build --target kafka-consumer -t kafka-consumer -f Dockerfile.test .
   - docker build --target server -t server -f Dockerfile.test .
   - docker build --target ui -t ui -f Dockerfile.test .
-
-script:
-  - docker run kafka-producer
-  - docker run kafka-consumer
-  - docker run server
