@@ -23,7 +23,7 @@ RUN mvn test
 FROM java as server
 RUN mvn test
 
-FROM node:10.8.0 as build-ui
+FROM node:10.8.0 as ui
 ENV APP_HOME=/usr/src/app
 WORKDIR $APP_HOME
 COPY client .
