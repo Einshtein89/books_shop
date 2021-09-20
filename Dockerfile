@@ -1,5 +1,6 @@
 FROM maven:3.8.1-jdk-8-slim as maven
 ENV APP_HOME=/usr/src/app
+WORKDIR $APP_HOME
 COPY ./pom.xml ./pom.xml
 COPY ./server/pom.xml ./server/pom.xml
 COPY ./kafka-redis-consumer/pom.xml ./kafka-redis-consumer/pom.xml
@@ -7,7 +8,6 @@ COPY ./kafka-producer/pom.xml ./kafka-producer/pom.xml
 COPY ./model/pom.xml ./model/pom.xml
 RUN mvn dependency:go-offline -B
 COPY . $APP_HOME
-WORKDIR $APP_HOME
 RUN mvn package -Dmaven.test.skip=true
 
 FROM openjdk:8-jre-alpine as java
