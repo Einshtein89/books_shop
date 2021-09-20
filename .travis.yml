@@ -1,9 +1,10 @@
+language: java
 services:
   - docker
 
 before_install:
-  - docker build --target kafka-producer -t kafa_producer -f Dockerfile.test .
-  - docker build --target kafka-consumer -t kafa_consumer -f Dockerfile.test .
+  - docker build --target kafka-producer -t kafka_producer -f Dockerfile.test .
+  - docker build --target kafka-consumer -t kafka_consumer -f Dockerfile.test .
   - docker build --target server -t server -f Dockerfile.test .
   - docker build --target ui -t ui -f Dockerfile.test .
 

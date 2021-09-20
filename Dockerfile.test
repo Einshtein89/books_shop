@@ -17,10 +17,10 @@ WORKDIR $APP_HOME
 FROM maven as kafka-producer
 RUN mvn test
 
-FROM java as kafka-consumer
+FROM maven as kafka-consumer
 RUN mvn test
 
-FROM java as server
+FROM maven as server
 RUN mvn test
 
 FROM node:10.8.0 as ui
