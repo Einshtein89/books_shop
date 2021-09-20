@@ -10,9 +10,18 @@ RUN mvn dependency:go-offline -B
 COPY . $APP_HOME
 RUN mvn package
 
+FROM maven as kafka-producer
+RUN mvn test
+
+FROM maven as kafka-consumer
+RUN mvn test
+
+FROM maven as server
+RUN mvn test
+
 FROM node:10.8.0 as ui
 ENV APP_HOME=/usr/src/app
 WORKDIR $APP_HOME
 COPY client .
 RUN npm install
-RUN npm run test
+RUN npm run build

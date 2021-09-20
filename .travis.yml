@@ -3,9 +3,12 @@ services:
   - docker
 
 before_install:
-  - docker build --target maven -t java -f Dockerfile.test .
+  - docker build --target kafka-producer -t kafka-producer -f Dockerfile.test .
+  - docker build --target kafka-consumer -t kafka-consumer -f Dockerfile.test .
+  - docker build --target server -t server -f Dockerfile.test .
   - docker build --target ui -t ui -f Dockerfile.test .
 
 script:
-  - docker run java
-  - docker run -e CI=true ui npm run test
+  - docker run kafka-producer
+  - docker run kafka-consumer
+  - docker run server
