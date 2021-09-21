@@ -2,7 +2,7 @@
 FROM node:10.8.0 as build-stage
 ENV APP_HOME=/usr/src/app
 RUN mkdir -p $APP_HOME
-COPY client $APP_HOME
+COPY . $APP_HOME
 WORKDIR $APP_HOME
 RUN npm install
 ARG configuration=production
