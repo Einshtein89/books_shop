@@ -7,6 +7,9 @@ services:
 before_install:
   - docker build --target ui -t ui -f Dockerfile.test .
 
+script:
+  - npm run build
+
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
