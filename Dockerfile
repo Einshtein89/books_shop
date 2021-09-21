@@ -12,5 +12,5 @@ RUN npm run build -- --output-path=./dist --configuration $configuration
 FROM nginx:latest
 EXPOSE 80
 COPY --from=build-stage /usr/src/app/dist /usr/share/nginx/html
-COPY client/src/public /usr/share/nginx/html/public
-COPY client/nginx-custom.conf /etc/nginx/conf.d/default.conf
+COPY src/public /usr/share/nginx/html/public
+COPY nginx-custom.conf /etc/nginx/conf.d/default.conf
