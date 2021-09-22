@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.users.User",
     "active": 0,
     "email": "admin@admin.ru",
@@ -14,7 +14,7 @@
     "sex": "man"
   },
   {
-    "id": 2,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.users.User",
     "active": 0,
     "email": "sdsd@dsdfds.ru",

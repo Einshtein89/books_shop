@@ -1,21 +1,21 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.Catalog",
     "name": "Sci-Fi"
   },
   {
-    "id": 2,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.Catalog",
     "name": "Fantasy"
   },
   {
-    "id": 3,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.Catalog",
     "name": "Novel"
   },
   {
-    "id": 4,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.Catalog",
     "name": "Physics"
   }

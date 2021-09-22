@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.Book",
     "author": "John Snow",
     "catalog": { "$ref" : "catalogs", "id" : 1, "name": "Sci-Fi"
@@ -9,7 +9,7 @@
     "title": "I know nothing"
   },
   {
-    "id": 2,
+    "id": 0,
     "_class": "com.nixsolutions.server.entity.Book",
     "author": "Steve Jobs",
     "catalog": { "$ref" : "catalogs", "id" : 2, "name": "Fantasy" },
