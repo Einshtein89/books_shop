@@ -19,7 +19,7 @@ export class ImageService implements OnInit {
       .catch(this._handleError);
   }
 
-  public getImage(url: string) {
+  public getImage(url: string): Observable<any> {
     return this.http.get(url)
       .catch(this._handleError)
   }
@@ -77,7 +77,7 @@ export class ImageService implements OnInit {
     return blob;
   }
 
-  private _handleError (error: HttpResponse<any> | any) {
+  private _handleError (error: HttpResponse<any> | any): Observable<any> {
     console.error(error.message || error);
     return Observable.throw(error);
   }

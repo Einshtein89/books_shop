@@ -1,6 +1,7 @@
 import {Inject, Injectable, OnDestroy, OnInit} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Constants} from "../constants/constants";
+import {Observable} from "rxjs/Observable";
 
 
 
@@ -17,7 +18,7 @@ export class PaginationService {
     this.urls();
   }
 
-  getPageByNumber(page: number, key: string, sortOption?:string, specialLink?: string) {
+  getPageByNumber(page: number, key: string, sortOption?:string, specialLink?: string): Observable<any> {
     let params: string = [
       `size=${this.currentPageSize ? this.currentPageSize : this.defaultPageSize}`,
       `page=${page}`,
@@ -27,7 +28,7 @@ export class PaginationService {
     return this.http.get(queryUrl);
   }
 
-  getPageByLink(pageLink: string) {
+  getPageByLink(pageLink: string): Observable<any> {
     return this.http.get(pageLink);
   }
 

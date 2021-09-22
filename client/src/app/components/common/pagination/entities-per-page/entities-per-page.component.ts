@@ -25,8 +25,9 @@ export class EntitiesPerPageComponent implements OnInit {
     let linkForPageByNumber = this.createLinkForPageBySize(value);
     this.paginationService.currentPageSize = value;
     this.paginationService.sortBy = "";
-    this.paginationService.getPageByNumber(0, this.entityListComponent.name,
-      this.paginationService.sortBy, linkForPageByNumber)
+    let pageByNumber = this.paginationService.getPageByNumber(0, this.entityListComponent.name,
+      this.paginationService.sortBy, linkForPageByNumber);
+    pageByNumber
       .subscribe(
         data => this.entityListComponent.populateEntities(data, true),
         errorCode =>  this.entityListComponent.statusCode = errorCode,

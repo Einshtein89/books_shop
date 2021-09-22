@@ -43,7 +43,7 @@ export class CartConfirmationComponent implements OnInit {
 
   ngOnInit() {
     if (this.booksInCart.size == 0) {
-      this.cartService.booksInCartAsObservable.delay(0)
+      this.cartService.booksInCartAsObservable
         .subscribe(booksInCart => {
           this.booksInCart = booksInCart;
           this.booksInCartKeys = Array.from(this.booksInCart.keys());

@@ -21,7 +21,8 @@ export class SortingComponent implements OnInit {
   sortPage(value: any) {
     this.entityListComponent.loading = true;
     this.paginationService.sortBy = value;
-    this.paginationService.getPageByNumber(0, this.entityListComponent.name, value)
+    let pageByNumber = this.paginationService.getPageByNumber(0, this.entityListComponent.name, value);
+    pageByNumber
       .subscribe(
         data => this.entityListComponent.populateEntities(data, true),
         errorCode =>  this.entityListComponent.statusCode = errorCode,

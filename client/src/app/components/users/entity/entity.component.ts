@@ -41,9 +41,7 @@ export class EntityComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.imgSrc = 'data:image/jpg;base64,' + res.body;
       },
       (error) => {
-        if (error.status === 404) {
-          this.imgSrc = this.imageService.getImgSrc(this.entity);
-        }
+        this.imgSrc = this.imageService.getImgSrc(this.entity);
       }
     );
   }

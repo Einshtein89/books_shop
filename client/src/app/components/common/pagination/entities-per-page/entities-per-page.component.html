@@ -1,9 +1,9 @@
 <div class="entitiesPerPage right floated">
   <mat-form-field>
     <mat-select placeholder="{{ 'all.users.page.entities.per.page' | translate }}"
-                (change)="changePageSize($event.value)"
+                (selectionChange)="changePageSize($event.value)"
                 id="entitiesPerPageDropdown"
-                [value]="this.paginationService.currentPageSize">
+                [(value)]="this.paginationService.currentPageSize">
       <mat-option *ngFor="let pageSize of pageSizes" [value]="pageSize">
         {{ pageSize }}
       </mat-option>
