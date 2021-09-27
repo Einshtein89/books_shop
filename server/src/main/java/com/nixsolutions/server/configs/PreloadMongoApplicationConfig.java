@@ -34,7 +34,8 @@ class PreloadMongoApplicationConfig
   @Value("classpath:users_test_data.json")
   private Resource usersTestData;
 
-  private static final List<String> COLLECTIONS = ImmutableList.of("users", "books", "catalogs", "roles");
+  private static final List<String> COLLECTIONS = ImmutableList.of("users", "books", "catalogs", "roles",
+      "database_sequences");
 
   @Bean
   @Autowired
