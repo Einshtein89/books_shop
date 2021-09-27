@@ -1,5 +1,7 @@
 package com.nixsolutions.server.configs;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -8,10 +10,21 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.repository.init.Jackson2RepositoryPopulatorFactoryBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ImmutableList;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
+@Slf4j
 class PreloadMongoApplicationConfig
 {
+  @Value("${spring.mongo.host}")
+  private String host;
+  @Value("${spring.data.mongodb.database}")
+  private String databasename;
   @Value("classpath:catalogs_test_data.json")
   private Resource catalogsTestData;
   @Value("classpath:books_test_data.json")
@@ -21,13 +34,29 @@ class PreloadMongoApplicationConfig
   @Value("classpath:users_test_data.json")
   private Resource usersTestData;
 
+  private static final List<String> COLLECTIONS = ImmutableList.of("users", "books", "catalogs", "roles");
+
   @Bean
   @Autowired
   public Jackson2RepositoryPopulatorFactoryBean repositoryPopulator(ObjectMapper objectMapper) {
+    dropCollections();
     Jackson2RepositoryPopulatorFactoryBean factory = new Jackson2RepositoryPopulatorFactoryBean();
     // inject your Jackson Object Mapper if you need to customize it:
     factory.setMapper(objectMapper);
     factory.setResources(new Resource[]{catalogsTestData, booksTestData, rolesTestData, usersTestData});
     return factory;
+  }
+
+  private void dropCollections()
+  {
+    try (MongoClient mongoClient = MongoClients.create("mongodb://" + host))
+    {
+      MongoDatabase database = mongoClient.getDatabase(databasename);
+      COLLECTIONS.forEach(collection -> database.getCollection(collection).drop());
+    }
+    catch (Exception e)
+    {
+      log.error("Exception while dropping collections from DB", e);
+    }
   }
 }
