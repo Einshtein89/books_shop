@@ -53,7 +53,11 @@ class PreloadMongoApplicationConfig
     try (MongoClient mongoClient = MongoClients.create("mongodb://" + host))
     {
       MongoDatabase database = mongoClient.getDatabase(databasename);
-      COLLECTIONS.forEach(collection -> database.getCollection(collection).drop());
+      COLLECTIONS.forEach(collection -> {
+            log.info("Dropping " + collection);
+            database.getCollection(collection).drop();
+          }
+      );
     }
     catch (Exception e)
     {
