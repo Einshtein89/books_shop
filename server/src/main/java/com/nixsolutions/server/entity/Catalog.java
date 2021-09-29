@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -27,5 +28,6 @@ public class Catalog implements Serializable
   @Id
   private long id;
   @NonNull
+  @Indexed(unique = true)
   private String name;
 }

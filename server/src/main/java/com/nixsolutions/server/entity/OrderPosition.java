@@ -24,9 +24,7 @@ public class OrderPosition implements Serializable
 
   @Id
   private long id;
-
   private long bookId;
-
   private long userId;
   private long amount;
   private LocalDate date;

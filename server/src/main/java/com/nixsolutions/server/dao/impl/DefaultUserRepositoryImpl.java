@@ -21,9 +21,11 @@ import com.nixsolutions.server.entity.users.Role;
 import com.nixsolutions.server.entity.users.User;
 
 import io.jsonwebtoken.lang.Collections;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Primary
+@Slf4j
 public class DefaultUserRepositoryImpl implements UserRepository
 {
   @Autowired
@@ -62,8 +64,11 @@ public class DefaultUserRepositoryImpl implements UserRepository
     }
     if (Collections.isEmpty(s.getRoles()))
     {
+      log.info("Finding roles for user");
       HashSet<Role> roles = new HashSet<>();
-      roles.add(roleRepository.findByRole("USER"));
+      Role role = roleRepository.findByRole("USER");
+      roles.add(role);
+      log.info("Roles found" + role);
       s.setRoles(roles);
     }
     return userRepository.save(s);

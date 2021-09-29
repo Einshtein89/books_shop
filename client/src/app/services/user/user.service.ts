@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
@@ -49,8 +49,8 @@ export class UserService {
       .catch(this._handleError)
   }
 
-  createUser(user: User, isRegister: boolean):Observable<User> {
-    return this.http.post<User>(isRegister ? this.registerUrl : this.userUrl, user, this.options)
+  createUser(user: User):Observable<User> {
+    return this.http.post<User>(this.registerUrl, user, this.options)
       .do(() => this.newUser.next(new User(user)))
       .catch(this._handleError);
   }

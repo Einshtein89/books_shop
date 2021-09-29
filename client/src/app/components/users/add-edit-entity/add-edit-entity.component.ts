@@ -168,7 +168,7 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
   }
 
   private createUser(user: User) {
-    this.userService.createUser(user, this._isRegister)
+    this.userService.createUser(user)
       .subscribe(
         () => {
           this.myForm.reset();
@@ -183,9 +183,13 @@ export class AddEditEntityComponent implements OnInit, OnDestroy, AfterViewCheck
           }
           let usersOnLastPage = this._entityListComponent.page.totalElements % this._entityListComponent.page.size;
           if (this._entityListComponent.entityList.length / this._entityListComponent.page.size === 1
-            && usersOnLastPage === 0)
-          {
+            && usersOnLastPage === 0) {
             this.paginationService.getPageByNumber(this._entityListComponent.page.totalPages, this._entityListComponent.name)
+              .subscribe(
+                data => this._populateEntities(data)
+              );
+          } else if (this._entityListComponent.entityList.length < this._entityListComponent.page.size) {
+            this.paginationService.getPageByLink(this._links.self.href)
               .subscribe(
                 data => this._populateEntities(data)
               );

@@ -3,6 +3,7 @@ package com.nixsolutions.server.entity.users;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -22,9 +23,10 @@ public class Role {
 
   @Transient
   public static final String SEQUENCE_NAME = "roles_sequence";
- @Id
+  @Id
   private long id;
   @NonNull
+  @Indexed(unique = true)
   private String role;
 
 }
