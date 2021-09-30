@@ -39,7 +39,7 @@ backend:
     targetPort: 3000
     selector: spring-boot-deployment
     protocol: TCP
-    type: NodePort
+    type: ClusterIP
   deployment:
     name: spring-boot-deployment
     replicaCount: 2
@@ -61,7 +61,7 @@ kafkaProducer:
     targetPort: 8081
     selector: kafka-producer-deployment
     protocol: TCP
-    type: NodePort
+    type: ClusterIP
   deployment:
     name: kafka-producer-deployment
     replicaCount: 2
@@ -83,7 +83,7 @@ kafkaConsumer:
     targetPort: 8082
     selector: kafka-consumer-deployment
     protocol: TCP
-    type: NodePort
+    type: ClusterIP
   deployment:
     name: kafka-consumer-deployment
     replicaCount: 2
@@ -113,6 +113,7 @@ mongo-express:
   mongodbPort: 80
   mongodbEnableAdmin: true
   service:
+    type: NodePort
     port: 80
 
 #redis

@@ -41,15 +41,15 @@ spec:
                 name: {{ .Values.backend.service.name }}
                 port:
                   number: {{ .Values.backend.service.port }}
-          - path: /db
-            pathType: Prefix
-            backend:
-              service:
-                {{- if .Values.custom_mongo_express.enabled }}
-                name: {{ .Values.custom_mongo_express.service.name }}
-                {{- else }}
-                name: "{{ .Release.Name }}-mongo-express"
-                {{- end }}
-                port:
-                  number: 80
+{{/*          - path: /db*/}}
+{{/*            pathType: Prefix*/}}
+{{/*            backend:*/}}
+{{/*              service:*/}}
+{{/*                {{- if .Values.custom_mongo_express.enabled }}*/}}
+{{/*                name: {{ .Values.custom_mongo_express.service.name }}*/}}
+{{/*                {{- else }}*/}}
+{{/*                name: "{{ .Release.Name }}-mongo-express"*/}}
+{{/*                {{- end }}*/}}
+{{/*                port:*/}}
+{{/*                  number: 80*/}}
 {{- end }}
