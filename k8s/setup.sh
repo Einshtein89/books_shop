@@ -89,14 +89,6 @@ then
     kubectl create namespace $PROJECT_NAME
 fi
 
-#create secret in k8s with cert and key (CN should correspond to host URL)
-if [[ ! $(kubectl get secret -n $PROJECT_NAME | grep tls-secret) ]]
-then
-    openssl genrsa -out tls.key 2048 && \
-    openssl req -new -x509 -key tls.key -out tls.cert -days 360 -subj /CN=books.com && \
-    kubectl create secret -n $PROJECT_NAME tls tls-secret --cert=tls.cert --key=tls.key
-fi
-
 helm dependency update $PROJECT_NAME && \
 kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
 helm upgrade --install --namespace $PROJECT_NAME $PROJECT_NAME $PROJECT_NAME && \
@@ -120,3 +112,4 @@ then
 fi
 
 minikube dashboard
+#minikube service books-store-mongo-express -n $PROJECT_NAME

@@ -16,7 +16,7 @@ frontend:
     targetPort: 80
     selector: angular-deployment
     protocol: TCP
-    type: NodePort
+    type: ClusterIP
   deployment:
     name: angular-deployment
     replicaCount: 2
