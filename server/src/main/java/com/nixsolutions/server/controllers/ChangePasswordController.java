@@ -15,16 +15,16 @@ import com.nixsolutions.server.dao.UserRepository;
 import com.nixsolutions.server.entity.users.PasswordChange;
 import com.nixsolutions.server.entity.users.User;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/changePassword")
+@RequiredArgsConstructor
 public class ChangePasswordController
 {
-  @Autowired
-  private TokenProvider tokenProvider;
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final TokenProvider tokenProvider;
+  private final UserRepository userRepository;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
   
   @PostMapping
   public ResponseEntity<?> saveUserPhoto(@RequestBody PasswordChange passwordChange)

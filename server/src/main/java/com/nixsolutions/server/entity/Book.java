@@ -31,7 +31,6 @@ public class Book implements Serializable
   @NonNull
   private String author;
   @NonNull
-  @Indexed(unique = true)
   private String title;
   @NonNull
   private Double price;

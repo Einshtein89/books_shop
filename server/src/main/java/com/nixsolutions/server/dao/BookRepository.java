@@ -13,11 +13,8 @@ import com.nixsolutions.server.entity.Book;
 @RepositoryRestResource(collectionResourceRel = "books", path = "books")
 public interface BookRepository extends MongoRepository<Book, Long>
 {
+  //  In case of using DBRef anootation for embedded objects, we can only search by object Id field with next query:
   @Query("{'catalog.$id': ?0}")
   Page<Book> findByCatalogId(@Param("catalogId") long catalogId, Pageable p);
   Page<Book> findByCatalogName(@Param("catalogName") String catalogName, Pageable p);
-
-//  In case of using DBRef anootation for embedded objects, we can only search by object Id field with next query:
-//  @Query("{'catalog.$id': ?0}")
-//  List<Book> findByCatalog(long id);
 }

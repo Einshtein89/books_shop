@@ -31,8 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrdersController
 {
   private final OrderProcess orderProcess;
-  
-  
+
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<String> getOrders(@RequestParam("userId") Long userId)
   {

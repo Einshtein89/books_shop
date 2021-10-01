@@ -1,6 +1,5 @@
 package com.nixsolutions.server.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,21 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nixsolutions.server.configs.jwttoken.AuthToken;
 import com.nixsolutions.server.configs.jwttoken.TokenProvider;
-import com.nixsolutions.server.dao.UserRepository;
 import com.nixsolutions.server.entity.users.LoginUser;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/token")
-public class AuthenticationController {
-
-  @Autowired
-  private AuthenticationManager authenticationManager;
-
-  @Autowired
-  private TokenProvider jwtTokenUtil;
-
-  @Autowired
-  private UserRepository userService;
+@RequiredArgsConstructor
+public class AuthenticationController
+{
+  private final AuthenticationManager authenticationManager;
+  private final TokenProvider jwtTokenUtil;
 
   @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
   public ResponseEntity<?> register(@RequestBody LoginUser loginUser) throws AuthenticationException {

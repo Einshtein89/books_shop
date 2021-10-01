@@ -25,16 +25,16 @@ import com.nixsolutions.server.entity.users.Photo;
 import com.nixsolutions.server.entity.users.User;
 import com.nixsolutions.server.services.SequenceGeneratorService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/userPhotoUpload")
+@RequiredArgsConstructor
 public class UserPhotoController
 {
-  @Autowired
-  private TokenProvider tokenProvider;
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private SequenceGeneratorService sequenceGeneratorService;
+  private final TokenProvider tokenProvider;
+  private final UserRepository userRepository;
+  private final SequenceGeneratorService sequenceGeneratorService;
   
   @PostMapping
   public ResponseEntity<?> saveUserPhoto(

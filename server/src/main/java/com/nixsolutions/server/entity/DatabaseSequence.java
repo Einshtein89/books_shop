@@ -1,4 +1,4 @@
-package com.nixsolutions.server.services;
+package com.nixsolutions.server.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

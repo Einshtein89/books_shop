@@ -22,15 +22,15 @@ import com.nixsolutions.server.dao.UserRepository;
 import com.nixsolutions.server.entity.users.User;
 import com.nixsolutions.server.validators.BeforeCreateUserValidator;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/signup")
+@RequiredArgsConstructor
 public class RegistrationController
 {
-  @Autowired
-  private UserRepository userService;
-
-  @Autowired
-  private BeforeCreateUserValidator validator;
+  private final UserRepository userService;
+  private final BeforeCreateUserValidator validator;
 
   @PostMapping
   public ResponseEntity<?> register(@RequestBody String newUserJson) throws IOException

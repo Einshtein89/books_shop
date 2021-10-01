@@ -1,17 +1,18 @@
 package com.nixsolutions.server.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 
 import com.nixsolutions.server.entity.Catalog;
 
+import lombok.RequiredArgsConstructor;
+
 @Component
+@RequiredArgsConstructor
 public class CatalogModelListener extends AbstractMongoEventListener<Catalog>
 {
-  @Autowired
-  private SequenceGeneratorService sequenceGeneratorService;
+  private final SequenceGeneratorService sequenceGeneratorService;
 
   @Override
   public void onBeforeConvert(BeforeConvertEvent<Catalog> event)

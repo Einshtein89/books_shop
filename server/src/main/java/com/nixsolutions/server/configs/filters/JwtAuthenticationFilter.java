@@ -25,7 +25,6 @@ import io.jsonwebtoken.SignatureException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter
 {
-
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -41,116 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter
             authToken = header.replace(TOKEN_PREFIX,"");
             try {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
-//                throw new ExpiredJwtException(new Header()
-//                {
-//                    @Override
-//                    public String getType()
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public Header setType(String s)
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public String getContentType()
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public Header setContentType(String s)
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public String getCompressionAlgorithm()
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public Header setCompressionAlgorithm(String s)
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public int size()
-//                    {
-//                        return 0;
-//                    }
-//
-//                    @Override
-//                    public boolean isEmpty()
-//                    {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean containsKey(Object key)
-//                    {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean containsValue(Object value)
-//                    {
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public Object get(Object key)
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public Object put(Object key, Object value)
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public Object remove(Object key)
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public void putAll(Map m)
-//                    {
-//
-//                    }
-//
-//                    @Override
-//                    public void clear()
-//                    {
-//
-//                    }
-//
-//                    @Override
-//                    public Set keySet()
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public Collection values()
-//                    {
-//                        return null;
-//                    }
-//
-//                    @Override
-//                    public Set<Entry> entrySet()
-//                    {
-//                        return null;
-//                    }
-//                }, jwtTokenUtil.getAllClaimsFromToken(authToken), "");
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {

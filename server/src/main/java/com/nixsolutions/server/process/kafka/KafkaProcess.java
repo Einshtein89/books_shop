@@ -52,7 +52,6 @@ public class KafkaProcess
   public void sendMessage(List<OrderPosition> orderPositions)
   {
     long userId = orderPositions.stream().findFirst().orElse(new OrderPosition()).getUserId();
-//    long countOfBooks = orderPositions.stream().mapToLong(Order::getAmount).sum();
     RestTemplate restTemplate = templateBuilder.build();
 
     orderPositions.forEach(order -> {

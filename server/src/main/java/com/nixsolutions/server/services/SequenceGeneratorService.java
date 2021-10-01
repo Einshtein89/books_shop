@@ -6,16 +6,19 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.nixsolutions.server.entity.DatabaseSequence;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class SequenceGeneratorService
 {
-  @Autowired
-  private MongoOperations mongoOperations;
+  private final MongoOperations mongoOperations;
 
   public long generateSequence(String seqName) {
     DatabaseSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
