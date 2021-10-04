@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.nixsolutions.server.entity.Book;
 
@@ -17,4 +18,12 @@ public interface BookRepository extends MongoRepository<Book, Long>
   @Query("{'catalog.$id': ?0}")
   Page<Book> findByCatalogId(@Param("catalogId") long catalogId, Pageable p);
   Page<Book> findByCatalogName(@Param("catalogName") String catalogName, Pageable p);
+
+  @Override
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  void deleteById(Long id);
+
+  @Override
+  @PreAuthorize("hasRole('ROLE_ADMIN')")
+  void delete(Book book);
 }
