@@ -15,7 +15,8 @@ import com.nixsolutions.server.entity.users.User;
 public interface UserRepository extends MongoRepository<User, Long>
 {
   List<User> findByFirstNameAndLastName(@Param("firstName") String firstName, @Param("lastName") String lastName);
-  List<User> findByFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(@Param("firstName") String firstName, @Param("lastName") String lastName);
+  List<User> findByFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(@Param("firstName") String firstName,
+      @Param("lastName") String lastName);
   User findByEmail(@Param("email") String email);
   
   @Override
@@ -25,5 +26,8 @@ public interface UserRepository extends MongoRepository<User, Long>
   @Override
   @PreAuthorize("hasRole('ROLE_ADMIN')")
   void delete(User user);
-  
+
+  @Override
+  @PostAuthorize("returnObject.orElse(new com.nixsolutions.server.entity.users.User()).email == authentication.principal.username or hasRole('ROLE_ADMIN')")
+  Optional<User> findById(Long aLong);
 }
