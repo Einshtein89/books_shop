@@ -13,6 +13,9 @@ RUN mvn package -Dmaven.test.skip=true
 FROM openjdk:8-jre-alpine as java
 ENV APP_HOME=/usr/src/app
 WORKDIR $APP_HOME
+RUN addgroup -g 1001 -S appuser && adduser -u 1001 -S appuser -G appuser
+RUN chown -R appuser:appuser $APP_HOME
+USER appuser
 
 FROM java as build-kafka-producer
 COPY --from=maven $APP_HOME/kafka-producer/target/*.jar app.jar
@@ -29,6 +32,8 @@ CMD ["java", "-jar", "app.jar"]
 FROM node:10.8.0 as build-ui
 ENV APP_HOME=/usr/src/app
 WORKDIR $APP_HOME
+RUN chown -R node:node $APP_HOME
+USER node
 COPY client/package.json ./
 RUN npm install
 COPY client .
