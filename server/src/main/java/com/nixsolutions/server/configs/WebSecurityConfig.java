@@ -13,23 +13,23 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.nixsolutions.server.configs.jwttoken.JwtAuthenticationEntryPoint;
 import com.nixsolutions.server.configs.filters.JwtAuthenticationFilter;
+import com.nixsolutions.server.configs.jwttoken.JwtAuthenticationEntryPoint;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
-
   @Resource(name = "userService")
   private UserDetailsService userDetailsService;
-
-  @Autowired
-  private JwtAuthenticationEntryPoint unauthorizedHandler;
+  private final JwtAuthenticationEntryPoint unauthorizedHandler;
+  private final WebMvcConfig webMvcConfig;
 
   @Override
   @Bean
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
   @Autowired
   public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService)
-        .passwordEncoder(encoder());
+        .passwordEncoder(webMvcConfig.encoder());
   }
 
   @Bean
@@ -62,10 +62,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     
     http.headers().frameOptions().disable();
   }
-
-  @Bean
-  public BCryptPasswordEncoder encoder(){
-    return new BCryptPasswordEncoder();
-  }
-
 }

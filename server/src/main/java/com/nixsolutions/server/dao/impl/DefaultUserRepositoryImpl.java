@@ -5,13 +5,14 @@ import static com.nixsolutions.server.configs.Constants.PASSWORD_MAX_LENGTH;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -21,20 +22,19 @@ import com.nixsolutions.server.entity.users.Role;
 import com.nixsolutions.server.entity.users.User;
 
 import io.jsonwebtoken.lang.Collections;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Primary
 @Slf4j
+@RequiredArgsConstructor
 public class DefaultUserRepositoryImpl implements UserRepository
 {
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private RoleRepository roleRepository;
-  @Autowired
-  private BCryptPasswordEncoder passwordEncoder;
-  
+  private final UserRepository userRepository;
+  private final RoleRepository roleRepository;
+  private final BCryptPasswordEncoder passwordEncoder;
+
   @Override
   public List<User> findByFirstNameAndLastName(
       String firstName, String lastName)
@@ -192,6 +192,12 @@ public class DefaultUserRepositoryImpl implements UserRepository
   public <S extends User> boolean exists(Example<S> example)
   {
     return userRepository.exists(example);
+  }
+
+  @Override
+  public <S extends User, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction)
+  {
+    return userRepository.findBy(example, queryFunction);
   }
 
   @Override
