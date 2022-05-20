@@ -35,7 +35,7 @@ frontend:
 backend:
   service:
     name: spring-boot-service
-    port: 80
+    port: 3000
     targetPort: 3000
     selector: spring-boot-deployment
     protocol: TCP
@@ -102,6 +102,8 @@ kafkaConsumer:
 mongodb:
   auth:
     enabled: false
+  persistence:
+    size: 1Gi
   #    rootPassword: password
   service:
     port: 80
@@ -125,12 +127,21 @@ redis:
     enabled: false
   replica:
     replicaCount: 1
+    persistence:
+      size: 1Gi
   architecture: standalone
+  master:
+    persistence:
+      size: 1Gi
 
 #kafka
 kafka:
   service:
     name: kafka
+  persistence:
+    size: 1Gi
+  logPersistence:
+    size: 1Gi
 #  advertisedListeners: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
 #  listenerSecurityProtocolMap: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
 #  interBrokerListenerName: PLAINTEXT
