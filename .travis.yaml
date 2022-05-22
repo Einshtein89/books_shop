@@ -1,0 +1,27 @@
+sudo: required
+services:
+  - docker
+before_install:
+#install travis inside a docker image that has ruby installed, so that we can run some command to encrypt json file
+#docker run -it -v $(pwd):/app ruby:2.4 sh - run bash terminal and mount current directory as a volume
+#inside container:
+#gem install travis - install travis
+#travis login --github-token YOUR PERSONAL TOKEN --com
+#travis encrypt-file service-account.json -r USERNAME/REPO --com
+#  - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
+#  - curl https://sdk.cloud.google.com | bash > dev/null;
+#  - source $HOME/google-cloud-sdk/path.bash.inc
+#  - gcloud components update kubectl
+#  - gcloud auth activate-service-account --key-file service-account.json
+#your GC project name
+#  - gcloud config set project k8s-books-store
+#your GC k8s cluster location (zone)
+#  - gcloud config set compute/zone us...
+#your GC k8s cluster name
+#  - gcloud container clusters get-credentials cluster-name
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build einshtein89/server-test -f Dockerfile.dev .
+
+script:
+  - docker run einshtein89/server-test mvn test
+

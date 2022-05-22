@@ -84,12 +84,6 @@ minikube addons enable ingress &&
 
 
 cd k8s || exit
-if [[ -f tls.cert ]]; then
-  rm tls.cert
-fi
-if [[ -f tls.key ]]; then
-  rm tls.key
-fi
 
 #create namespace if needed
 if [[ ! $(kubectl get namespace | grep $PROJECT_NAME) ]]; then

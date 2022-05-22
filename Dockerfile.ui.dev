@@ -1,0 +1,9 @@
+FROM node:10.8.0 as build-ui
+ENV APP_HOME=/usr/src/app
+WORKDIR $APP_HOME
+RUN chown -R node:node $APP_HOME
+USER node
+COPY client/package.json $APP_HOME
+RUN npm install
+COPY client $APP_HOME
+RUN npm test
