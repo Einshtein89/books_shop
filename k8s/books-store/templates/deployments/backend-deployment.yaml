@@ -38,7 +38,7 @@ spec:
         - name: {{ .Values.backend.deployment.name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.repository }}/{{ .Values.backend.deployment.image.name }}:{{ .Values.backend.deployment.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.repository }}/{{ .Values.backend.deployment.image.name }}"
           imagePullPolicy: {{ .Values.backend.deployment.image.imagePullPolicy }}
           ports:
             - containerPort: {{ .Values.backend.deployment.containerPort }}

@@ -38,7 +38,7 @@ spec:
         - name: {{ .Values.kafkaProducer.deployment.name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.repository }}/{{ .Values.kafkaProducer.deployment.image.name }}:{{ .Values.kafkaProducer.deployment.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.repository }}/{{ .Values.kafkaProducer.deployment.image.name }}"
           imagePullPolicy: {{ .Values.kafkaProducer.deployment.image.imagePullPolicy }}
           ports:
             - containerPort: {{ .Values.kafkaProducer.deployment.containerPort }}

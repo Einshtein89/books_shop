@@ -60,3 +60,21 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "books-store.ingress.paths" -}}
+paths:
+  - path: /?(.*)
+    pathType: Prefix
+    backend:
+      service:
+        name: {{ .Values.frontend.service.name }}
+        port:
+          number: {{ .Values.frontend.service.port }}
+  - path: /api?(.*)
+    pathType: Prefix
+    backend:
+      service:
+        name: {{ .Values.backend.service.name }}
+        port:
+          number: {{ .Values.backend.service.port }}
+{{- end }}

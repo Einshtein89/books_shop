@@ -15,41 +15,23 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if .Values.ingress.tls }}
+  {{- if .Values.ingress.tls.enabled }}
   tls:
     - hosts:
       {{- range .Values.ingress.tls.hosts }}
         - {{ . | quote }}
       {{- end }}
-      secretName: {{ .Values.ingress.tls.secretName }}
+      secretName: {{ .Values.ingress.tls.certificate.secretName }}
   {{- end }}
   rules:
-    - host: {{ .Values.ingress.host }}
+    {{- if .Values.ingress.tls.enabled }}
+    {{- range .Values.ingress.tls.hosts }}
+    - host: {{ . | quote }}
       http:
-        paths:
-          - path: /?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Values.frontend.service.name }}
-                port:
-                  number: {{ .Values.frontend.service.port }}
-          - path: /api?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Values.backend.service.name }}
-                port:
-                  number: {{ .Values.backend.service.port }}
-{{/*          - path: /db*/}}
-{{/*            pathType: Prefix*/}}
-{{/*            backend:*/}}
-{{/*              service:*/}}
-{{/*                {{- if .Values.custom_mongo_express.enabled }}*/}}
-{{/*                name: {{ .Values.custom_mongo_express.service.name }}*/}}
-{{/*                {{- else }}*/}}
-{{/*                name: "{{ .Release.Name }}-mongo-express"*/}}
-{{/*                {{- end }}*/}}
-{{/*                port:*/}}
-{{/*                  number: 80*/}}
+        {{- include "books-store.ingress.paths" $ | nindent 8 }}
+    {{- end }}
+    {{- else }}
+    - http:
+        {{- include "books-store.ingress.paths" . | nindent 8 }}
+    {{- end }}
 {{- end }}
