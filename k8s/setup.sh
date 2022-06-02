@@ -105,7 +105,7 @@ else
    --disk-type "pd-standard" --disk-size "50" --metadata disable-legacy-endpoints=true \
    --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
    --max-pods-per-node "110" --num-nodes "3" --logging=SYSTEM,WORKLOAD --monitoring=SYSTEM \
-   --enable-ip-alias --network "projects/k8s-books-store/global/networks/default" \
+   --enable-ip-alias --network "projects/$GCP_PROJECT_NAME/global/networks/default" \
    --subnetwork "projects/$GCP_PROJECT_NAME/regions/us-central1/subnetworks/default" \
    --no-enable-intra-node-visibility --default-max-pods-per-node "110" \
    --no-enable-master-authorized-networks --addons HorizontalPodAutoscaling,HttpLoadBalancing,GcePersistentDiskCsiDriver \
@@ -120,7 +120,7 @@ else
   #your GC k8s cluster name
   gcloud container clusters get-credentials my-first-cluster-1 -q &&
   #your GC project name
-  gcloud config set project k8s-books-store -q &&
+  gcloud config set project $GCP_PROJECT_NAME -q &&
 
   #setup ingress-nginx in GKE cluster
   kubectl create clusterrolebinding cluster-admin-binding \
